@@ -1,0 +1,11 @@
+services:
+  app:
+    build:
+      context: ../..
+      dockerfile: docker/Dockerfile
+      args:
+        INSTALL_DEV: "true"
+    command: ./scripts/test_entrypoint.sh
+    env_file:
+      - ../../.env.test
+    restart: no

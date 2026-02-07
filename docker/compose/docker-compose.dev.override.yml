@@ -1,0 +1,15 @@
+services:
+  app:
+    build:
+      context: ../..
+      dockerfile: docker/Dockerfile
+    command: ./scripts/dev_entrypoint.sh
+    env_file:
+      - ../../.env.dev
+    volumes:
+      - ../../.logging.dev.yml:/app/.logging.dev.yml:ro
+      - ../../logs/:/app/logs/
+
+  db:
+    ports:
+      - "${DB_PORT}:5432"
