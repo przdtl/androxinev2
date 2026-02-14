@@ -14,8 +14,6 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.
 from infrastructure.config import settings
 from infrastructure.db.base import Base
 
-from infrastructure.db.models.user import User
-
 
 config = context.config
 

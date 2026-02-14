@@ -2,7 +2,7 @@ import uuid
 import datetime
 
 
-from domain.enums.day_of_week import DayOfWeek
+from domain.enums import DayOfWeek
 
 
 class WorkoutTemplate:
