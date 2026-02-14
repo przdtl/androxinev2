@@ -3,7 +3,7 @@ services:
     build:
       context: ../..
       dockerfile: docker/Dockerfile
-    command: ./scripts/dev_entrypoint.sh
+    command: ./scripts/dev.sh
     env_file:
       - ../../.env.dev
     volumes:

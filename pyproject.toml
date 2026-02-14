@@ -1,5 +1,5 @@
 [project]
-name = "gym-tracker"
+name = "androxinev2"
 version = "0.1.0"
 description = "Помощник для отслеживания посещений спортзала и прогресса в тренировках."
 readme = "README.md"

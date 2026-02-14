@@ -5,7 +5,7 @@ services:
       dockerfile: docker/Dockerfile
       args:
         INSTALL_DEV: "true"
-    command: ./scripts/test_entrypoint.sh
+    command: ./scripts/test.sh
     env_file:
       - ../../.env.test
     restart: no
