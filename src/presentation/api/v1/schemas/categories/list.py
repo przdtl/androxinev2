@@ -1,5 +1,5 @@
-from pydantic import BaseModel
+from presentation.api.v1.schemas.common import CategorySchema
 
 
-class ListCategoriesResponse(BaseModel):
-    categories: list[str]
+class ListCategoriesResponse(CategorySchema):
+    pass

@@ -1,15 +1,30 @@
 services:
+  app-migrate:
+    container_name: androxine-app-migrate-base
+    build:
+      context: ../..
+      dockerfile: docker/Dockerfile
+    command: ./scripts/migrate.sh
+    restart: no
+    volumes:
+      - ../../src:/app/src
+    depends_on:
+      db:
+        condition: service_healthy
+
   app:
+    container_name: androxine-app-base
     restart: always
     volumes:
       - ../../src:/app/src
     depends_on:
       db:
         condition: service_healthy
-    ports:
-      - "${APP_PORT}:8000"
+      app-migrate:
+        condition: service_completed_successfully
 
   db:
+    container_name: androxine-db-base
     image: postgres:17
     volumes:
       - postgres_data:/var/lib/postgresql/data/

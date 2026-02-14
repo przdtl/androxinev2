@@ -1,6 +1,8 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from fastapi_pagination import Page, paginate, Params
+
 from presentation.api.v1.schemas.excercises import (
-    ListUserExcercisesResponse,
+    ListUserExercisesResponse,
 )
 
 router = APIRouter()
@@ -11,7 +13,9 @@ router = APIRouter()
     summary="Список упражнений пользователя",
     description="Возвращает список упражнений пользователя",
     response_description="Список упражнений пользователя",
-    response_model=ListUserExcercisesResponse,
+    response_model=Page[ListUserExercisesResponse],
 )
-async def list_user_excercises() -> ListUserExcercisesResponse:
+async def list_user_excercises(
+    params: Params = Depends(),
+) -> Page[ListUserExercisesResponse]:
     pass

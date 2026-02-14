@@ -1,24 +1,24 @@
-from .archive import ArchiveExcerciseRequest, ArchiveExcerciseResponse
-from .create import CreateExcerciseRequest, CreateExcerciseResponse
-from .get import GetExcerciseResponse
-from .list import ListExcercisesResponse
+from .archive import ArchiveExerciseRequest, ArchiveExerciseResponse
+from .create import CreateExerciseRequest, CreateExerciseResponse
+from .get import GetExerciseResponse
+from .list import ListExercisesResponse
 from .list_user_excercises import (
-    ListUserExcercisesResponse,
+    ListUserExercisesResponse,
 )
-from .restore import RestoreExcerciseRequest, RestoreExcerciseResponse
-from .update import UpdateExcerciseRequest, UpdateExcerciseResponse
+from .restore import RestoreExerciseRequest, RestoreExerciseResponse
+from .update import UpdateExerciseRequest, UpdateExerciseResponse
 
 
 __all__ = [
-    "ArchiveExcerciseRequest",
-    "ArchiveExcerciseResponse",
-    "CreateExcerciseRequest",
-    "CreateExcerciseResponse",
-    "GetExcerciseResponse",
-    "ListExcercisesResponse",
-    "ListUserExcercisesResponse",
-    "RestoreExcerciseRequest",
-    "RestoreExcerciseResponse",
-    "UpdateExcerciseRequest",
-    "UpdateExcerciseResponse",
+    "CreateExerciseRequest",
+    "CreateExerciseResponse",
+    "GetExerciseResponse",
+    "ListExercisesResponse",
+    "ListUserExercisesResponse",
+    "UpdateExerciseRequest",
+    "UpdateExerciseResponse",
+    "ArchiveExerciseRequest",
+    "ArchiveExerciseResponse",
+    "RestoreExerciseRequest",
+    "RestoreExerciseResponse",
 ]

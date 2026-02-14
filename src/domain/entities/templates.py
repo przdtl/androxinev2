@@ -5,6 +5,42 @@ import datetime
 from domain.enums import DayOfWeek
 
 
+class TemplateExercise:
+    def __init__(
+        self,
+        id: uuid.UUID,
+        exercise_id: uuid.UUID,
+        weight: float | None,
+        reps: int | None,
+        order: int | None,
+    ):
+        self._id = id
+        self._exercise_id = exercise_id
+        self._weight = weight
+        self._reps = reps
+        self._order = order
+
+    @property
+    def id(self) -> uuid.UUID:
+        return self._id
+
+    @property
+    def exercise_id(self) -> uuid.UUID:
+        return self._exercise_id
+
+    @property
+    def default_weight(self) -> float | None:
+        return self._weight
+
+    @property
+    def default_reps(self) -> int | None:
+        return self._reps
+
+    @property
+    def order(self) -> int | None:
+        return self._order
+
+
 class WorkoutTemplate:
     def __init__(
         self,
@@ -14,7 +50,7 @@ class WorkoutTemplate:
         day_of_week: DayOfWeek | None,
         created_at: datetime.datetime,
         updated_at: datetime.datetime,
-        exercises: list["TemplateExercise"],
+        exercises: list[TemplateExercise],
     ):
         self._id = id
         self._user_id = user_id
@@ -49,41 +85,11 @@ class WorkoutTemplate:
         return self._updated_at
 
     @property
-    def exercises(self) -> list["TemplateExercise"]:
+    def exercises(self) -> list[TemplateExercise]:
         return self._exercises
 
+    def sorted_exercises(self) -> list[TemplateExercise]:
+        return sorted(self._exercises, key=lambda e: e.order or 0)
 
-class TemplateExercise:
-    def __init__(
-        self,
-        id: uuid.UUID,
-        exercise_id: int,
-        weight: float | None,
-        reps: int | None,
-        order: int | None,
-    ):
-        self._id = id
-        self._exercise_id = exercise_id
-        self._weight = weight
-        self._reps = reps
-        self._order = order
-
-    @property
-    def id(self) -> uuid.UUID:
-        return self._id
-
-    @property
-    def exercise_id(self) -> int:
-        return self._exercise_id
-
-    @property
-    def default_weight(self) -> float | None:
-        return self._weight
-
-    @property
-    def default_reps(self) -> int | None:
-        return self._reps
-
-    @property
-    def order(self) -> int | None:
-        return self._order
+    def get_exercise(self, exercise_id: int) -> TemplateExercise | None:
+        return next((e for e in self._exercises if e.exercise_id == exercise_id), None)

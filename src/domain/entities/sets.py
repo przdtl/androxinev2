@@ -7,7 +7,7 @@ class Set:
         self,
         id: uuid.UUID,
         user_id: int,
-        exercise_id: int,
+        exercise_id: uuid.UUID,
         weight: float,
         reps: int,
         created_at: datetime.datetime,
@@ -28,7 +28,7 @@ class Set:
         return self._user_id
 
     @property
-    def exercise_id(self) -> int:
+    def exercise_id(self) -> uuid.UUID:
         return self._exercise_id
 
     @property
@@ -42,3 +42,10 @@ class Set:
     @property
     def created_at(self) -> datetime.datetime:
         return self._created_at
+
+    def performed_today(self) -> bool:
+        today = datetime.datetime.now().date()
+        return self._created_at.date() == today
+
+    def volume(self) -> float:
+        return self._weight * self._reps

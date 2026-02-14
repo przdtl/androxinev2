@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from presentation.api.v1.schemas.excercises import (
-    GetExcerciseResponse,
+    GetExerciseResponse,
 )
 
 router = APIRouter()
@@ -11,7 +11,7 @@ router = APIRouter()
     summary="Получить упражнение",
     description="Возвращает упражнение по идентификатору",
     response_description="Детали упражнения",
-    response_model=GetExcerciseResponse,
+    response_model=GetExerciseResponse,
 )
-async def get_excercise() -> GetExcerciseResponse:
+async def get_excercise() -> GetExerciseResponse:
     pass

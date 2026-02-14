@@ -1,10 +1,11 @@
 services:
   app:
+    container_name: androxine-app-test
     build:
       context: ../..
       dockerfile: docker/Dockerfile
       args:
-        INSTALL_DEV: "true"
+        GROUP: "test"
     command: ./scripts/test.sh
     env_file:
       - ../../.env.test

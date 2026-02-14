@@ -1,0 +1,14 @@
+services:
+  app:
+    container_name: androxine-app-prod
+    build:
+      context: ../..
+      dockerfile: docker/Dockerfile
+    command: ./scripts/prod.sh
+    env_file:
+      - ../../.env.dev
+    volumes:
+      - ../../logs/:/app/logs/
+    ports:
+      - "8186:8000"
+

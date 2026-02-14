@@ -19,6 +19,9 @@ class Category:
     def title(self) -> str:
         return self._title
 
+    def update_title(self, new_title: str) -> None:
+        self._title = new_title
+
 
 class Exercise:
     def __init__(
@@ -66,3 +69,12 @@ class Exercise:
     @property
     def updated_at(self) -> datetime.datetime:
         return self._updated_at
+
+    def update_title(self, new_title: str) -> None:
+        self._title = new_title
+
+    def update_short(self, new_short: str) -> None:
+        self._short = new_short
+
+    def belongs_to_category(self, category_id: uuid.UUID) -> bool:
+        return self._category.id == category_id

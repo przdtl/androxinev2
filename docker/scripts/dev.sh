@@ -1,5 +1,5 @@
 #!/bin/sh
 
-# sh ./scripts/alembic.sh
+cd src/
 
-fastapi run ./src/main.py --reload
+fastapi run main.py --reload

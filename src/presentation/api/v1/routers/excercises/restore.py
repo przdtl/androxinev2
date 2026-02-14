@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from presentation.api.v1.schemas.excercises import (
-    RestoreExcerciseRequest,
-    RestoreExcerciseResponse,
+    RestoreExerciseRequest,
+    RestoreExerciseResponse,
 )
 
 router = APIRouter()
@@ -12,9 +12,9 @@ router = APIRouter()
     summary="Восстановить упражнение",
     description="Восстанавливает упражнение по идентификатору",
     response_description="Результат восстановления",
-    response_model=RestoreExcerciseResponse,
+    response_model=RestoreExerciseResponse,
 )
 async def restore_excercise(
-    data: RestoreExcerciseRequest,
-) -> RestoreExcerciseResponse:
+    data: RestoreExerciseRequest,
+) -> RestoreExerciseResponse:
     pass
