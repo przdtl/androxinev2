@@ -1,5 +1,5 @@
 from .users import User
-from .excercises import Exercise
+from .exercises import Exercise
 from .templates import WorkoutTemplate
 from .sets import Set
 

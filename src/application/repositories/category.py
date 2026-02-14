@@ -2,7 +2,7 @@ import uuid
 
 from abc import ABC, abstractmethod
 
-from domain.entities.excercises import Category
+from domain.entities.exercises import Category
 
 
 class CategoryRepository(ABC):

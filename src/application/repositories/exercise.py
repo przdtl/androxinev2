@@ -2,7 +2,7 @@ import uuid
 
 from abc import ABC, abstractmethod
 
-from domain.entities.excercises import Exercise
+from domain.entities.exercises import Exercise
 
 
 class ExerciseRepository(ABC):

@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+
 from presentation.api.v1.schemas.templates import (
     DeleteTemplateRequest,
     DeleteTemplateResponse,
