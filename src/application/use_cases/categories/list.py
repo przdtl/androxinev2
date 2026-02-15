@@ -13,4 +13,14 @@ class ListCategoriesUseCase:
         self,
         input_dto: ListCategoriesInputDTO,
     ) -> list[ListCategoriesOutputDTO]:
-        pass
+        async with self._uow:
+            categories = await self._uow.categories_repo.list()
+            return [
+                ListCategoriesOutputDTO(
+                    id=category.id,
+                    title=category.title,
+                    created_at=category.created_at,
+                    updated_at=category.updated_at,
+                )
+                for category in categories
+            ]

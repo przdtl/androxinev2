@@ -13,4 +13,17 @@ class ListExercisesUseCase:
         self,
         input_dto: ListExercisesInputDTO,
     ) -> list[ListExercisesOutputDTO]:
-        pass
+        async with self._uow:
+            exercises = await self._uow.exercises_repo.list()
+            return [
+                ListExercisesOutputDTO(
+                    id=exercise.id,
+                    title=exercise.title,
+                    short=exercise.short,
+                    category=exercise.category,
+                    created_at=exercise.created_at,
+                    updated_at=exercise.updated_at,
+                    is_archived=False,
+                )
+                for exercise in exercises
+            ]

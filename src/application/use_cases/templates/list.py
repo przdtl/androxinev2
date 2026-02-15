@@ -13,4 +13,32 @@ class ListTemplatesUseCase:
         self,
         input_dto: ListTemplatesInputDTO,
     ) -> list[ListTemplatesOutputDTO]:
-        pass
+        async with self._uow:
+            templates = await self._uow.workout_templates_repo.list()
+            result = []
+            for template in templates:
+                exercises_output = []
+                for tex in template.exercises:
+                    exercise = await self._uow.exercises_repo.get(tex.exercise_id)
+                    if exercise:
+                        exercises_output.append(
+                            {
+                                "id": tex.id,
+                                "default_weight": tex.default_weight,
+                                "default_reps": tex.default_reps,
+                                "order": tex.order,
+                                "exercise": exercise,
+                            }
+                        )
+
+                result.append(
+                    ListTemplatesOutputDTO(
+                        id=template.id,
+                        title=template.title,
+                        day_of_week=template.day_of_week,
+                        created_at=template.created_at,
+                        updated_at=template.updated_at,
+                        exercises=exercises_output,
+                    )
+                )
+            return result

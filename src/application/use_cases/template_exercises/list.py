@@ -13,4 +13,7 @@ class ListTemplateExercisesUseCase:
         self,
         input_dto: ListTemplateExercisesInputDTO,
     ) -> list[ListTemplateExercisesOutputDTO]:
-        pass
+        async with self._uow:
+            # In real implementation, query template exercises
+            # For now, return empty list
+            return []

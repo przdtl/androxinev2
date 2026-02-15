@@ -13,4 +13,12 @@ class DeleteTemplateUseCase:
         self,
         input_dto: DeleteTemplateInputDTO,
     ) -> DeleteTemplateOutputDTO:
-        pass
+        async with self._uow:
+            template = await self._uow.workout_templates_repo.get(input_dto.id)
+            if not template:
+                raise ValueError(f"Template {input_dto.id} not found")
+
+            await self._uow.workout_templates_repo.remove(input_dto.id)
+            await self._uow.commit()
+
+            return DeleteTemplateOutputDTO()

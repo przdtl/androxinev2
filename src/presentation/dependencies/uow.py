@@ -4,5 +4,11 @@ from fastapi import Depends
 
 from application.uow import UnitOfWork
 
+from infrastructure.uow import InMemoryUnitOfWork
 
-UowDep = Annotated[UnitOfWork, Depends()]
+
+def get_uow() -> UnitOfWork:
+    return InMemoryUnitOfWork()
+
+
+UowDep = Annotated[UnitOfWork, Depends(get_uow)]

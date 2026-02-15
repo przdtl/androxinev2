@@ -13,4 +13,12 @@ class DeleteSetUseCase:
         self,
         input_dto: DeleteSetInputDTO,
     ) -> DeleteSetOutputDTO:
-        pass
+        async with self._uow:
+            set_entity = await self._uow.sets_repo.get(input_dto.id)
+            if not set_entity:
+                raise ValueError(f"Set {input_dto.id} not found")
+
+            await self._uow.sets_repo.remove(input_dto.id)
+            await self._uow.commit()
+
+            return DeleteSetOutputDTO()
