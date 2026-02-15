@@ -17,6 +17,7 @@ router = APIRouter()
 
 @router.post(
     path="/{id}/archive/",
+    deprecated=True,
     summary="Архивировать упражнение",
     description="Архивирует упражнение по идентификатору",
     response_description="Результат архивирования",

@@ -4,6 +4,11 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     # Common
     PROJECT_NAME: str = "AndroxineV2"
+    JWT_SECRET_KEY: str = "your_secret_key"
+    JWT_ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+
+    # Telegram
+    TELEGRAM_BOT_TOKEN: str = "your_bot_token"
 
     # DB
     DB_HOST: str = "db"

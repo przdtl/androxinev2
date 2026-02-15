@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 
+from .auth import router as auth_router
 from .categories import router as categories_router
 from .exercises import router as excercises_router
 from .sets import router as sets_router
@@ -10,6 +11,7 @@ router = APIRouter(
     prefix="/v1",
 )
 
+router.include_router(auth_router)
 router.include_router(categories_router)
 router.include_router(excercises_router)
 router.include_router(sets_router)

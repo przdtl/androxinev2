@@ -13,7 +13,6 @@ class UpdateTemplateExerciseUseCase:
         self,
         input_dto: UpdateTemplateExerciseInputDTO,
     ) -> UpdateTemplateExerciseOutputDTO:
-        async with self._uow:
-            # In real implementation, find and update template exercise
-            # For now, raise not implemented
-            raise NotImplementedError("Update template exercise not fully implemented")
+        # In real implementation, find and update template exercise
+        # For now, raise not implemented
+        raise NotImplementedError("Update template exercise not fully implemented")

@@ -1,12 +1,15 @@
 import uuid
 
-from application.repositories.category import CategoryRepository
 from domain.entities.exercises import Category
+
+from application.repositories.category import CategoryRepository
+
+storage: dict[uuid.UUID, Category] = {}
 
 
 class InMemoryCategoryRepository(CategoryRepository):
     def __init__(self):
-        self._storage: dict[uuid.UUID, Category] = {}
+        self._storage: dict[uuid.UUID, Category] = storage
 
     async def add(self, category: Category) -> None:
         self._storage[category.id] = category

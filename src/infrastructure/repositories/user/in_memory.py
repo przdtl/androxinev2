@@ -1,10 +1,13 @@
-from application.repositories.user import UserRepository
 from domain.entities.users import User
+
+from application.repositories.user import UserRepository
+
+storage: dict[int, User] = {}
 
 
 class InMemoryUserRepository(UserRepository):
     def __init__(self):
-        self._storage: dict[int, User] = {}
+        self._storage: dict[int, User] = storage
 
     async def add(self, user: User) -> None:
         self._storage[user.id] = user

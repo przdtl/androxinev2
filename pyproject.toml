@@ -9,6 +9,7 @@ dependencies = [
     "asyncpg>=0.31.0",
     "fastapi-pagination>=0.15.9",
     "fastapi[standard]>=0.128.4",
+    "pyjwt>=2.11.0",
     "python-ulid[pydantic]>=3.1.0",
     "sqlalchemy[asyncio]>=2.0.46",
 ]

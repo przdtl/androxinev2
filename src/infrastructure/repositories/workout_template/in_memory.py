@@ -1,12 +1,15 @@
 import uuid
 
-from application.repositories.workout_template import WorkoutTemplateRepository
 from domain.entities.templates import WorkoutTemplate
+
+from application.repositories.workout_template import WorkoutTemplateRepository
+
+storage: dict[uuid.UUID, WorkoutTemplate] = {}
 
 
 class InMemoryWorkoutTemplateRepository(WorkoutTemplateRepository):
     def __init__(self):
-        self._storage: dict[uuid.UUID, WorkoutTemplate] = {}
+        self._storage: dict[uuid.UUID, WorkoutTemplate] = storage
 
     async def add(self, template: WorkoutTemplate) -> None:
         self._storage[template.id] = template

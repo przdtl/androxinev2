@@ -7,9 +7,13 @@ class Category:
         self,
         id: uuid.UUID,
         title: str,
+        created_at: datetime.datetime,
+        updated_at: datetime.datetime,
     ):
         self._id = id
         self._title = title
+        self._created_at = created_at
+        self._updated_at = updated_at
 
     @property
     def id(self) -> uuid.UUID:
@@ -19,7 +23,16 @@ class Category:
     def title(self) -> str:
         return self._title
 
+    @property
+    def created_at(self) -> datetime.datetime:
+        return self._created_at
+
+    @property
+    def updated_at(self) -> datetime.datetime:
+        return self._updated_at
+
     def update_title(self, new_title: str) -> None:
+        self._updated_at = datetime.datetime.now(tz=datetime.timezone.utc)
         self._title = new_title
 
 
@@ -71,9 +84,11 @@ class Exercise:
         return self._updated_at
 
     def update_title(self, new_title: str) -> None:
+        self._updated_at = datetime.datetime.now(tz=datetime.timezone.utc)
         self._title = new_title
 
     def update_short(self, new_short: str) -> None:
+        self._updated_at = datetime.datetime.now(tz=datetime.timezone.utc)
         self._short = new_short
 
     def belongs_to_category(self, category_id: uuid.UUID) -> bool:

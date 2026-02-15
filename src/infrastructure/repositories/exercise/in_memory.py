@@ -1,12 +1,15 @@
 import uuid
 
-from application.repositories.exercise import ExerciseRepository
 from domain.entities.exercises import Exercise
+
+from application.repositories.exercise import ExerciseRepository
+
+storage: dict[uuid.UUID, Exercise] = {}
 
 
 class InMemoryExerciseRepository(ExerciseRepository):
     def __init__(self):
-        self._storage: dict[uuid.UUID, Exercise] = {}
+        self._storage: dict[uuid.UUID, Exercise] = storage
 
     async def add(self, exercise: Exercise) -> None:
         self._storage[exercise.id] = exercise

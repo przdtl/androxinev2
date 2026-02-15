@@ -13,7 +13,6 @@ class DeleteTemplateExerciseUseCase:
         self,
         input_dto: DeleteTemplateExerciseInputDTO,
     ) -> DeleteTemplateExerciseOutputDTO:
-        async with self._uow:
-            # In real implementation, find and delete template exercise from template
-            await self._uow.commit()
-            return DeleteTemplateExerciseOutputDTO()
+        # In real implementation, find and delete template exercise from template
+        await self._uow.commit()
+        return DeleteTemplateExerciseOutputDTO()

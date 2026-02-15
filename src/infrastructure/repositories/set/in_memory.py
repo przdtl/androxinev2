@@ -1,12 +1,15 @@
 import uuid
 
-from application.repositories.set import SetRepository
 from domain.entities.sets import Set
+
+from application.repositories.set import SetRepository
+
+storage: dict[uuid.UUID, Set] = {}
 
 
 class InMemorySetRepository(SetRepository):
     def __init__(self):
-        self._storage: dict[uuid.UUID, Set] = {}
+        self._storage: dict[uuid.UUID, Set] = storage
 
     async def add(self, set_entity: Set) -> None:
         self._storage[set_entity.id] = set_entity
