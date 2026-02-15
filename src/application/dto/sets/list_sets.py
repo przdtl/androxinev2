@@ -1,9 +1,44 @@
+import datetime
+import uuid
+
 from pydantic import BaseModel
 
 
 class ListSetsInputDTO(BaseModel):
-    pass
+    page: int
+    size: int
+
+
+class CategorySchema(BaseModel):
+    id: uuid.UUID
+    title: str
+    created_at: datetime.datetime
+    updated_at: datetime.datetime
+
+    class Config:
+        from_attributes = True
+
+
+class ExerciseSchema(BaseModel):
+    id: uuid.UUID
+    title: str
+    short: str
+    category: CategorySchema
+    created_at: datetime.datetime
+    updated_at: datetime.datetime
+    is_archived: bool
+
+    class Config:
+        from_attributes = True
 
 
 class ListSetsOutputDTO(BaseModel):
-    pass
+    id: uuid.UUID
+    user_id: int
+    exercise: ExerciseSchema
+    weight: float
+    reps: int
+    created_at: datetime.datetime
+
+    class Config:
+        from_attributes = True

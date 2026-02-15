@@ -1,8 +1,10 @@
+import uuid
+
 from pydantic import BaseModel
 
 
 class DeleteSetInputDTO(BaseModel):
-    pass
+    id: uuid.UUID
 
 
 class DeleteSetOutputDTO(BaseModel):

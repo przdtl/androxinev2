@@ -12,5 +12,5 @@ class ListTemplatesUseCase:
     async def execute(
         self,
         input_dto: ListTemplatesInputDTO,
-    ) -> ListTemplatesOutputDTO:
+    ) -> list[ListTemplatesOutputDTO]:
         pass

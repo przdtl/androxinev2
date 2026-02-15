@@ -1,14 +1,11 @@
-from typing import List, Optional, TypeVar, Generic
-from pydantic import BaseModel, Field
-from uuid import UUID
-from datetime import datetime
-from enum import IntEnum
+import uuid
+import enum
+import datetime
+
+from pydantic import BaseModel
 
 
-# ------------------------
-# ENUMS
-# ------------------------
-class DayOfWeek(IntEnum):
+class DayOfWeek(enum.IntEnum):
     MONDAY = 0
     TUESDAY = 1
     WEDNESDAY = 2
@@ -18,22 +15,16 @@ class DayOfWeek(IntEnum):
     SUNDAY = 6
 
 
-# ------------------------
-# ERROR SCHEMA
-# ------------------------
 class ErrorResponse(BaseModel):
     detail: str
-    code: str  # CAPS
+    code: str
 
 
-# ------------------------
-# CATEGORY
-# ------------------------
 class CategorySchema(BaseModel):
-    id: UUID
+    id: uuid.UUID
     title: str
-    created_at: datetime
-    updated_at: datetime
+    created_at: datetime.datetime
+    updated_at: datetime.datetime
 
     class Config:
         from_attributes = True

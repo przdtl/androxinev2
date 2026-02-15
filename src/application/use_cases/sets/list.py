@@ -12,5 +12,5 @@ class ListSetsUseCase:
     async def execute(
         self,
         input_dto: ListSetsInputDTO,
-    ) -> ListSetsOutputDTO:
+    ) -> list[ListSetsOutputDTO]:
         pass

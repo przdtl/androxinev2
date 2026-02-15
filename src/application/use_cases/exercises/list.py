@@ -12,5 +12,5 @@ class ListExercisesUseCase:
     async def execute(
         self,
         input_dto: ListExercisesInputDTO,
-    ) -> ListExercisesOutputDTO:
+    ) -> list[ListExercisesOutputDTO]:
         pass

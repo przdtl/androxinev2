@@ -12,5 +12,5 @@ class ListCategoriesUseCase:
     async def execute(
         self,
         input_dto: ListCategoriesInputDTO,
-    ) -> ListCategoriesOutputDTO:
+    ) -> list[ListCategoriesOutputDTO]:
         pass

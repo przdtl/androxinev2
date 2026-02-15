@@ -12,5 +12,5 @@ class GetTodayTemplatesUseCase:
     async def execute(
         self,
         input_dto: GetTodayTemplatesInputDTO,
-    ) -> GetTodayTemplatesOutputDTO:
+    ) -> list[GetTodayTemplatesOutputDTO]:
         pass

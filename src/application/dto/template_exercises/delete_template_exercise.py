@@ -1,8 +1,10 @@
+import uuid
+
 from pydantic import BaseModel
 
 
 class DeleteTemplateExerciseInputDTO(BaseModel):
-    pass
+    id: uuid.UUID
 
 
 class DeleteTemplateExerciseOutputDTO(BaseModel):

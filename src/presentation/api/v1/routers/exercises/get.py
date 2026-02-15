@@ -1,8 +1,15 @@
+import uuid
+
 from fastapi import APIRouter
 
+from application.dto.exercises.get_excercise import GetExerciseInputDTO
+from application.use_cases.exercises.get import GetExerciseUseCase
+
+from presentation.api.v1.schemas.common import CategorySchema
 from presentation.api.v1.schemas.exercises import (
     GetExerciseResponse,
 )
+from presentation.dependencies.uow import UowDep
 
 router = APIRouter()
 
@@ -14,5 +21,25 @@ router = APIRouter()
     response_description="Детали упражнения",
     response_model=GetExerciseResponse,
 )
-async def get_excercise() -> GetExerciseResponse:
-    pass
+async def get_excercise(
+    id: uuid.UUID,
+    uow: UowDep,
+) -> GetExerciseResponse:
+    dto = GetExerciseInputDTO(id=id)
+    use_case = GetExerciseUseCase(uow=uow)
+    exercise = await use_case.execute(input_dto=dto)
+
+    return GetExerciseResponse(
+        id=exercise.id,
+        title=exercise.title,
+        short=exercise.short,
+        category=CategorySchema(
+            id=exercise.category.id,
+            title=exercise.category.title,
+            created_at=exercise.category.created_at,
+            updated_at=exercise.category.updated_at,
+        ),
+        created_at=exercise.created_at,
+        updated_at=exercise.updated_at,
+        is_archived=exercise.is_archived,
+    )

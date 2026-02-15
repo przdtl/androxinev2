@@ -7,6 +7,7 @@ from application.repositories import (
     CategoryRepository,
     ExerciseRepository,
     WorkoutTemplateRepository,
+    SetRepository,
 )
 
 
@@ -15,6 +16,7 @@ class UnitOfWork(ABC):
     categories_repo: CategoryRepository
     exercises_repo: ExerciseRepository
     workout_templates_repo: WorkoutTemplateRepository
+    sets_repo: SetRepository
 
     @abstractmethod
     async def __aenter__(self) -> Self: ...

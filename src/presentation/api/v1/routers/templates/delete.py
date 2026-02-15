@@ -1,9 +1,15 @@
+import uuid
+
 from fastapi import APIRouter
+
+from application.dto.templates.delete_template import DeleteTemplateInputDTO
+from application.use_cases.templates.delete import DeleteTemplateUseCase
 
 from presentation.api.v1.schemas.templates import (
     DeleteTemplateRequest,
     DeleteTemplateResponse,
 )
+from presentation.dependencies.uow import UowDep
 
 router = APIRouter()
 
@@ -16,6 +22,12 @@ router = APIRouter()
     response_model=DeleteTemplateResponse,
 )
 async def delete_template(
+    id: uuid.UUID,
     data: DeleteTemplateRequest,
+    uow: UowDep,
 ) -> DeleteTemplateResponse:
-    pass
+    dto = DeleteTemplateInputDTO(id=id)
+    use_case = DeleteTemplateUseCase(uow=uow)
+    await use_case.execute(input_dto=dto)
+
+    return DeleteTemplateResponse()
