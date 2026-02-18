@@ -1,0 +1,32 @@
+import uuid
+import datetime
+
+from dto.exercises import (
+    RestoreExerciseInputDTO,
+    RestoreExerciseOutputDTO,
+)
+from dto.exercises.restore_excercise import CategorySchema
+
+
+class RestoreExerciseUseCase:
+    def __init__(self):
+        pass
+
+    async def execute(
+        self,
+        input_dto: RestoreExerciseInputDTO,
+    ) -> RestoreExerciseOutputDTO:
+        return RestoreExerciseOutputDTO(
+            id=input_dto.id,
+            title="Exercise 1",
+            short="Short description",
+            category=CategorySchema(
+                id=uuid.uuid4(),
+                title="Category 1",
+                created_at=datetime.datetime.now(),
+                updated_at=datetime.datetime.now(),
+            ),
+            created_at=datetime.datetime.now(),
+            updated_at=datetime.datetime.now(),
+            is_archived=False,
+        )

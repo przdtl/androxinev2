@@ -1,0 +1,43 @@
+import uuid
+
+from fastapi import APIRouter
+
+from dto.exercises.restore_excercise import RestoreExerciseInputDTO
+from use_cases.exercises.restore import RestoreExerciseUseCase
+
+from ..schemas.common import CategorySchema
+from ..schemas.exercises import (
+    RestoreExerciseResponse,
+)
+
+router = APIRouter()
+
+
+@router.post(
+    path="/{id}/restore/",
+    summary="Восстановить упражнение",
+    description="Восстанавливает упражнение по идентификатору",
+    response_description="Результат восстановления",
+    response_model=RestoreExerciseResponse,
+)
+async def restore_excercise(
+    id: uuid.UUID,
+) -> RestoreExerciseResponse:
+    dto = RestoreExerciseInputDTO(id=id)
+    use_case = RestoreExerciseUseCase()
+    exercise = await use_case.execute(input_dto=dto)
+
+    return RestoreExerciseResponse(
+        id=exercise.id,
+        title=exercise.title,
+        short=exercise.short,
+        category=CategorySchema(
+            id=exercise.category.id,
+            title=exercise.category.title,
+            created_at=exercise.category.created_at,
+            updated_at=exercise.category.updated_at,
+        ),
+        created_at=exercise.created_at,
+        updated_at=exercise.updated_at,
+        is_archived=exercise.is_archived,
+    )
