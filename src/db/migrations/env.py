@@ -28,6 +28,41 @@ if config.config_file_name is not None:
 
 target_metadata = Base.metadata
 
+DIRECTUS_TABLE_PREFIXES = [
+    "directus_",
+    "directus_system_",
+    "directus_activity_",
+    "directus_collections_",
+    "directus_fields_",
+    "directus_relations_",
+    "directus_revisions_",
+    "directus_users_",
+    "directus_roles_",
+    "directus_permissions_",
+    "directus_presets_",
+    "directus_notifications_",
+    "directus_shares_",
+    "directus_flows_",
+    "directus_operations_",
+    "directus_webhooks_",
+    "directus_versions_",
+    "directus_migrations_",
+    "directus_sessions_",
+    "directus_settings_",
+    "directus_files_",
+    "directus_folders_",
+    "directus_dashboards_",
+    "directus_panels_",
+    "directus_translations_",
+    "directus_telemetry_",
+]
+
+
+def include_object(object, name, type_, reflected, compare_to):
+    if type_ == "table" and name.startswith("directus_"):
+        return False
+    return True
+
 
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.
@@ -47,6 +82,7 @@ def run_migrations_offline() -> None:
         target_metadata=target_metadata,
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
+        include_object=include_object,
     )
 
     with context.begin_transaction():
@@ -54,7 +90,11 @@ def run_migrations_offline() -> None:
 
 
 def do_run_migrations(connection: Connection) -> None:
-    context.configure(connection=connection, target_metadata=target_metadata)
+    context.configure(
+        connection=connection,
+        target_metadata=target_metadata,
+        include_object=include_object,
+    )
 
     with context.begin_transaction():
         context.run_migrations()

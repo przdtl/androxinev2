@@ -2,9 +2,11 @@ import jwt
 
 from typing import Annotated
 
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends
 
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+
+from services.jwt import JWTService
 
 from config import settings
 
@@ -14,19 +16,13 @@ security = HTTPBearer()
 def get_current_user(
     credentials: HTTPAuthorizationCredentials = Depends(security),
 ):
+    jwt_service = JWTService(secret_key=settings.JWT_SECRET_KEY)
     try:
-        payload = jwt.decode(
-            credentials.credentials,
-            settings.JWT_SECRET_KEY,
-            algorithms=["HS256"],
-        )
+        payload = jwt_service.decode(credentials.credentials)
     except jwt.InvalidTokenError:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid token",
-        )
+        raise HTTPBearer().make_not_authenticated_error()
 
-    return payload["telegram_id"]
+    return payload.sub
 
 
 UserDep = Annotated[int, Depends(get_current_user)]

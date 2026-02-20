@@ -1,12 +1,15 @@
 from fastapi import APIRouter, status
 
 from dto.auth import TelegramAuthInputDTO
+
 from use_cases.auth import TelegramAuthUseCase
+
 from services.jwt import JWTService
 from services.telegram_auth import TelegramAuthService
 
 from config import settings
 
+from presentation.api.dependencies.uow import UOWDep
 from presentation.api.schemas.auth import AuthResponse, TelegramAuthRequest
 
 router = APIRouter()
@@ -18,7 +21,7 @@ router = APIRouter()
     status_code=status.HTTP_200_OK,
     summary="Authenticate via Telegram WebApp",
 )
-async def telegram_auth(request: TelegramAuthRequest) -> AuthResponse:
+async def telegram_auth(request: TelegramAuthRequest, uow: UOWDep) -> AuthResponse:
     """
     Authenticate user via Telegram WebApp init_data.
 
@@ -35,6 +38,7 @@ async def telegram_auth(request: TelegramAuthRequest) -> AuthResponse:
     use_case = TelegramAuthUseCase(
         telegram_auth_service=telegram_auth_service,
         jwt_service=jwt_service,
+        uow=uow,
     )
 
     output_dto = await use_case.execute(input_dto)

@@ -4,14 +4,16 @@ from fastapi_pagination import Page, paginate, Params
 from dto.templates.list_templates import ListTemplatesInputDTO
 from use_cases.templates.list import ListTemplatesUseCase
 
-from ..schemas.common import (
+from presentation.api.dependencies.auth import UserDep
+from presentation.api.dependencies.uow import UOWDep
+from presentation.api.schemas.common import (
     CategorySchema,
     DayOfWeek as DayOfWeekSchema,
 )
-from ..schemas.templates import (
+from presentation.api.schemas.templates import (
     ListTemplatesResponse,
 )
-from ..schemas.templates.list import (
+from presentation.api.schemas.templates.list import (
     TemplateExerciseSchema,
     ExerciseSchema,
 )
@@ -27,13 +29,15 @@ router = APIRouter()
     response_model=Page[ListTemplatesResponse],
 )
 async def list_templates(
+    uow: UOWDep,
+    user_id: UserDep,
     params: Params = Depends(),
 ) -> Page[ListTemplatesResponse]:
     dto = ListTemplatesInputDTO(
         page=params.page,
         size=params.size,
     )
-    use_case = ListTemplatesUseCase()
+    use_case = ListTemplatesUseCase(uow=uow)
     templates = await use_case.execute(input_dto=dto)
 
     items = [

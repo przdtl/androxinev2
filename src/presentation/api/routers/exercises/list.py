@@ -4,8 +4,10 @@ from fastapi_pagination import Page, paginate, Params
 from dto.exercises.list_excercises import ListExercisesInputDTO
 from use_cases.exercises.list import ListExercisesUseCase
 
-from ..schemas.common import CategorySchema
-from ..schemas.exercises import (
+from presentation.api.dependencies.auth import UserDep
+from presentation.api.dependencies.uow import UOWDep
+from presentation.api.schemas.common import CategorySchema
+from presentation.api.schemas.exercises import (
     ListExercisesResponse,
 )
 
@@ -20,13 +22,15 @@ router = APIRouter()
     response_model=Page[ListExercisesResponse],
 )
 async def list_excercises(
+    uow: UOWDep,
+    user_id: UserDep,
     params: Params = Depends(),
 ) -> Page[ListExercisesResponse]:
     dto = ListExercisesInputDTO(
         page=params.page,
         size=params.size,
     )
-    use_case = ListExercisesUseCase()
+    use_case = ListExercisesUseCase(uow=uow)
     exercises = await use_case.execute(input_dto=dto)
 
     items = [

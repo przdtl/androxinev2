@@ -7,9 +7,11 @@ from use_cases.template_exercises.create import (
     CreateTemplateExerciseUseCase,
 )
 
-from ..schemas.common import CategorySchema
-from ..schemas.template_exercises.create import ExerciseSchema
-from ..schemas.template_exercises import (
+from presentation.api.dependencies.auth import UserDep
+from presentation.api.dependencies.uow import UOWDep
+from presentation.api.schemas.common import CategorySchema
+from presentation.api.schemas.template_exercises.create import ExerciseSchema
+from presentation.api.schemas.template_exercises import (
     CreateTemplateExerciseRequest,
     CreateTemplateExerciseResponse,
 )
@@ -26,6 +28,8 @@ router = APIRouter()
 )
 async def create_template_exercise(
     data: CreateTemplateExerciseRequest,
+    uow: UOWDep,
+    user_id: UserDep,
 ) -> CreateTemplateExerciseResponse:
     dto = CreateTemplateExerciseInputDTO(
         exercise_id=data.exercise_id,
@@ -33,7 +37,7 @@ async def create_template_exercise(
         default_reps=data.default_reps,
         order=data.order,
     )
-    use_case = CreateTemplateExerciseUseCase()
+    use_case = CreateTemplateExerciseUseCase(uow=uow)
     template_exercise = await use_case.execute(input_dto=dto)
 
     return CreateTemplateExerciseResponse(

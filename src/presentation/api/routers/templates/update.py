@@ -8,15 +8,17 @@ from dto.templates.update_template import (
 )
 from use_cases.templates.update import UpdateTemplateUseCase
 
-from ..schemas.common import (
+from presentation.api.dependencies.auth import UserDep
+from presentation.api.dependencies.uow import UOWDep
+from presentation.api.schemas.common import (
     CategorySchema,
     DayOfWeek as DayOfWeekSchema,
 )
-from ..schemas.templates import (
+from presentation.api.schemas.templates import (
     UpdateTemplateRequest,
     UpdateTemplateResponse,
 )
-from ..schemas.templates.update import (
+from presentation.api.schemas.templates.update import (
     TemplateExerciseSchema,
     ExerciseSchema,
 )
@@ -34,13 +36,15 @@ router = APIRouter()
 async def update_template(
     id: uuid.UUID,
     data: UpdateTemplateRequest,
+    uow: UOWDep,
+    user_id: UserDep,
 ) -> UpdateTemplateResponse:
     dto = UpdateTemplateInputDTO(
         id=id,
         title=data.title,
         day_of_week=DayOfWeekDTO(data.day_of_week),
     )
-    use_case = UpdateTemplateUseCase()
+    use_case = UpdateTemplateUseCase(uow=uow)
     template = await use_case.execute(input_dto=dto)
 
     exercises = [

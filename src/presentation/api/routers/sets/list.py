@@ -4,9 +4,11 @@ from fastapi_pagination import Page, paginate, Params
 from dto.sets.list_sets import ListSetsInputDTO
 from use_cases.sets.list import ListSetsUseCase
 
-from ..schemas.common import CategorySchema
-from ..schemas.sets.list import ExerciseSchema
-from ..schemas.sets import ListSetsResponse
+from presentation.api.dependencies.auth import UserDep
+from presentation.api.dependencies.uow import UOWDep
+from presentation.api.schemas.common import CategorySchema
+from presentation.api.schemas.sets.list import ExerciseSchema
+from presentation.api.schemas.sets import ListSetsResponse
 
 router = APIRouter()
 
@@ -19,13 +21,15 @@ router = APIRouter()
     response_model=Page[ListSetsResponse],
 )
 async def list_sets(
+    uow: UOWDep,
+    user_id: UserDep,
     params: Params = Depends(),
 ) -> Page[ListSetsResponse]:
     dto = ListSetsInputDTO(
         page=params.page,
         size=params.size,
     )
-    use_case = ListSetsUseCase()
+    use_case = ListSetsUseCase(uow=uow)
     sets = await use_case.execute(input_dto=dto)
 
     items = [

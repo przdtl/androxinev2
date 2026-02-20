@@ -3,10 +3,12 @@ from dto.templates import (
     DeleteTemplateOutputDTO,
 )
 
+from uow import UnitOfWork
+
 
 class DeleteTemplateUseCase:
-    def __init__(self):
-        pass
+    def __init__(self, uow: UnitOfWork):
+        self._uow = uow
 
     async def execute(
         self,

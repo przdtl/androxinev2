@@ -3,7 +3,7 @@ import datetime
 
 from pydantic import BaseModel, Field
 
-from ..common import CategorySchema
+from presentation.api.schemas.common import CategorySchema
 
 
 class UpdateExerciseRequest(BaseModel):

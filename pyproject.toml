@@ -5,13 +5,13 @@ description = "Помощник для отслеживания посещени
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "aiogram>=3.25.0",
     "alembic>=1.18.3",
     "asyncpg>=0.31.0",
     "fastapi-pagination>=0.15.9",
     "fastapi[standard]>=0.128.4",
     "pyjwt>=2.11.0",
     "python-ulid[pydantic]>=3.1.0",
-    "sqladmin[full]>=0.23.0",
     "sqlalchemy[asyncio]>=2.0.46",
 ]
 

@@ -41,5 +41,27 @@ services:
     expose:
       - 5432
 
+  directus:
+    container_name: androxine-directus-base
+    image: directus/directus:latest
+    restart: always
+    ports:
+      - "8055:8055"
+    environment:
+      DB_CLIENT: "pg"
+      DB_HOST: "db"
+      DB_PORT: "5432"
+      DB_DATABASE: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASS}
+
+      ADMIN_EMAIL: "${ADMIN_EMAIL:-admin@admin.com}"
+      ADMIN_PASSWORD: "${ADMIN_PASSWORD:-admin}"
+
+      SECRET: ${DIRECTUS_SECRET}
+    depends_on:
+      db:
+        condition: service_healthy
+
 volumes:
   postgres_data:

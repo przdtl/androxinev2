@@ -17,7 +17,7 @@ class JWTService:
         self._algorithm = algorithm
         self._access_token_expire_minutes = access_token_expire_minutes
 
-    def create_access_token(
+    def encode(
         self,
         data: PayloadDataDTO,
     ) -> str:
@@ -39,14 +39,19 @@ class JWTService:
         )
         return encoded_jwt
 
-    def decode_token(self, token: str) -> dict[str, Any] | None:
-        """Decode and validate JWT token."""
+    def decode(self, token: str) -> PayloadDTO:
         try:
             payload = jwt.decode(
                 jwt=token,
                 key=self._secret_key,
                 algorithms=[self._algorithm],
             )
-            return payload
         except jwt.PyJWTError:
-            return None
+            raise jwt.InvalidTokenError()
+
+        try:
+            payload = PayloadDTO.model_validate(payload)
+        except Exception:
+            raise jwt.InvalidTokenError()
+
+        return payload

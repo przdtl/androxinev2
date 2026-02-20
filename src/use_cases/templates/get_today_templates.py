@@ -1,14 +1,14 @@
-import datetime
-
 from dto.templates import (
     GetTodayTemplatesInputDTO,
     GetTodayTemplatesOutputDTO,
 )
 
+from uow import UnitOfWork
+
 
 class GetTodayTemplatesUseCase:
-    def __init__(self):
-        pass
+    def __init__(self, uow: UnitOfWork):
+        self._uow = uow
 
     async def execute(
         self,

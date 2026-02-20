@@ -1,8 +1,7 @@
 import enum
 import uuid
 
-
-from sqlalchemy import ForeignKey, UniqueConstraint
+from sqlalchemy import ForeignKey, UniqueConstraint, CheckConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from db.base import Base
@@ -21,9 +20,9 @@ class DayOfWeek(enum.IntEnum):
 class WorkoutTemplate(Base):
     __tablename__ = "workout_template"
 
-    id: Mapped[uuid.UUID] = mapped_column(primary_key=True)
-    user_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
-    title: Mapped[str]
+    id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
+    user_id: Mapped[int] = mapped_column(ForeignKey("user.id", ondelete="CASCADE"))
+    title: Mapped[str] = mapped_column(nullable=False)
     day_of_week: Mapped[DayOfWeek | None]
 
     exercises: Mapped[list["TemplateExercise"]] = relationship(
@@ -43,11 +42,13 @@ class WorkoutTemplate(Base):
 class TemplateExercise(Base):
     __tablename__ = "template_exercise"
 
-    id: Mapped[uuid.UUID] = mapped_column(primary_key=True)
+    id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
     workout_template_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("workout_template.id")
+        ForeignKey("workout_template.id", ondelete="CASCADE")
     )
-    exercise_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("exercise.id"))
+    exercise_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("exercise.id", ondelete="CASCADE")
+    )
     weight: Mapped[float | None]
     reps: Mapped[int | None]
     order: Mapped[int] = mapped_column(default=0)
@@ -57,5 +58,17 @@ class TemplateExercise(Base):
             "workout_template_id",
             "order",
             name="uq_template_exercise_workout_template_id_order",
+        ),
+        CheckConstraint(
+            "weight >= 0",
+            name="ck_template_exercise_weight_non_negative",
+        ),
+        CheckConstraint(
+            "reps >= 0",
+            name="ck_template_exercise_reps_non_negative",
+        ),
+        CheckConstraint(
+            "order >= 0",
+            name="ck_template_exercise_order_non_negative",
         ),
     )

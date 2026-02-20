@@ -3,9 +3,11 @@ from fastapi import APIRouter
 from dto.sets.create_set import CreateSetInputDTO
 from use_cases.sets.create import CreateSetUseCase
 
-from ..schemas.common import CategorySchema
-from ..schemas.sets.create import ExerciseSchema
-from ..schemas.sets import CreateSetRequest, CreateSetResponse
+from presentation.api.dependencies.auth import UserDep
+from presentation.api.dependencies.uow import UOWDep
+from presentation.api.schemas.common import CategorySchema
+from presentation.api.schemas.sets.create import ExerciseSchema
+from presentation.api.schemas.sets import CreateSetRequest, CreateSetResponse
 
 router = APIRouter()
 
@@ -19,13 +21,15 @@ router = APIRouter()
 )
 async def create_set(
     data: CreateSetRequest,
+    uow: UOWDep,
+    user_id: UserDep,
 ) -> CreateSetResponse:
     dto = CreateSetInputDTO(
         exercise_id=data.exercise_id,
         weight=data.weight,
         reps=data.reps,
     )
-    use_case = CreateSetUseCase()
+    use_case = CreateSetUseCase(uow=uow)
     set_item = await use_case.execute(input_dto=dto)
 
     return CreateSetResponse(

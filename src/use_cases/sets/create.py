@@ -1,17 +1,14 @@
-import uuid
-import datetime
-
 from dto.sets import (
     CreateSetInputDTO,
     CreateSetOutputDTO,
 )
-from dto.sets.create_set import ExerciseSchema, CategorySchema
-from models.sets import Set
+
+from uow import UnitOfWork
 
 
 class CreateSetUseCase:
-    def __init__(self):
-        pass
+    def __init__(self, uow: UnitOfWork):
+        self._uow = uow
 
     async def execute(
         self,

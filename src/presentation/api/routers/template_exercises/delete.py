@@ -9,7 +9,9 @@ from use_cases.template_exercises.delete import (
     DeleteTemplateExerciseUseCase,
 )
 
-from ..schemas.template_exercises import (
+from presentation.api.dependencies.auth import UserDep
+from presentation.api.dependencies.uow import UOWDep
+from presentation.api.schemas.template_exercises import (
     DeleteTemplateExerciseResponse,
 )
 
@@ -25,9 +27,11 @@ router = APIRouter()
 )
 async def delete_template_excercise(
     id: uuid.UUID,
+    uow: UOWDep,
+    user_id: UserDep,
 ) -> DeleteTemplateExerciseResponse:
     dto = DeleteTemplateExerciseInputDTO(id=id)
-    use_case = DeleteTemplateExerciseUseCase()
+    use_case = DeleteTemplateExerciseUseCase(uow=uow)
     await use_case.execute(input_dto=dto)
 
     return DeleteTemplateExerciseResponse()

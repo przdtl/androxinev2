@@ -1,16 +1,14 @@
-import uuid
-import datetime
-
 from dto.templates import (
     CreateTemplateInputDTO,
     CreateTemplateOutputDTO,
 )
-from models.templates import WorkoutTemplate, TemplateExercise
+
+from uow import UnitOfWork
 
 
 class CreateTemplateUseCase:
-    def __init__(self):
-        pass
+    def __init__(self, uow: UnitOfWork):
+        self._uow = uow
 
     async def execute(
         self,

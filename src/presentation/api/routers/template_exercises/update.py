@@ -9,9 +9,11 @@ from use_cases.template_exercises.update import (
     UpdateTemplateExerciseUseCase,
 )
 
-from ..schemas.common import CategorySchema
-from ..schemas.template_exercises.update import ExerciseSchema
-from ..schemas.template_exercises import (
+from presentation.api.dependencies.auth import UserDep
+from presentation.api.dependencies.uow import UOWDep
+from presentation.api.schemas.common import CategorySchema
+from presentation.api.schemas.template_exercises.update import ExerciseSchema
+from presentation.api.schemas.template_exercises import (
     UpdateTemplateExerciseRequest,
     UpdateTemplateExerciseResponse,
 )
@@ -29,6 +31,8 @@ router = APIRouter()
 async def update_template_excercise(
     id: uuid.UUID,
     data: UpdateTemplateExerciseRequest,
+    uow: UOWDep,
+    user_id: UserDep,
 ) -> UpdateTemplateExerciseResponse:
     dto = UpdateTemplateExerciseInputDTO(
         id=id,
@@ -36,7 +40,7 @@ async def update_template_excercise(
         default_reps=data.default_reps,
         order=data.order,
     )
-    use_case = UpdateTemplateExerciseUseCase()
+    use_case = UpdateTemplateExerciseUseCase(uow=uow)
     template_exercise = await use_case.execute(input_dto=dto)
 
     return UpdateTemplateExerciseResponse(

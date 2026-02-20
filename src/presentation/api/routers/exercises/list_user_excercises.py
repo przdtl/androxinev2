@@ -8,8 +8,10 @@ from use_cases.exercises.list_user_excercises import (
     ListUserExercisesUseCase,
 )
 
-from ..schemas.common import CategorySchema
-from ..schemas.exercises import (
+from presentation.api.dependencies.auth import UserDep
+from presentation.api.dependencies.uow import UOWDep
+from presentation.api.schemas.common import CategorySchema
+from presentation.api.schemas.exercises import (
     ListUserExercisesResponse,
 )
 
@@ -24,13 +26,15 @@ router = APIRouter()
     response_model=Page[ListUserExercisesResponse],
 )
 async def list_user_excercises(
+    uow: UOWDep,
+    user_id: UserDep,
     params: Params = Depends(),
 ) -> Page[ListUserExercisesResponse]:
     dto = ListUserExercisesInputDTO(
         page=params.page,
         size=params.size,
     )
-    use_case = ListUserExercisesUseCase()
+    use_case = ListUserExercisesUseCase(uow=uow)
     exercises = await use_case.execute(input_dto=dto)
 
     items = [

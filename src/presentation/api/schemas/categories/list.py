@@ -1,4 +1,4 @@
-from api.schemas.common import CategorySchema
+from presentation.api.schemas.common import CategorySchema
 
 
 class ListCategoriesResponse(CategorySchema):

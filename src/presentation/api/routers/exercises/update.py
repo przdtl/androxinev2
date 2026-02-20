@@ -5,8 +5,10 @@ from fastapi import APIRouter
 from dto.exercises.update_excercise import UpdateExerciseInputDTO
 from use_cases.exercises.update import UpdateExerciseUseCase
 
-from ..schemas.common import CategorySchema
-from ..schemas.exercises import (
+from presentation.api.dependencies.auth import UserDep
+from presentation.api.dependencies.uow import UOWDep
+from presentation.api.schemas.common import CategorySchema
+from presentation.api.schemas.exercises import (
     UpdateExerciseRequest,
     UpdateExerciseResponse,
 )
@@ -24,6 +26,8 @@ router = APIRouter()
 async def update_excercise(
     id: uuid.UUID,
     data: UpdateExerciseRequest,
+    uow: UOWDep,
+    user_id: UserDep,
 ) -> UpdateExerciseResponse:
     dto = UpdateExerciseInputDTO(
         id=id,
@@ -31,7 +35,7 @@ async def update_excercise(
         short=data.short,
         is_archived=data.is_archived,
     )
-    use_case = UpdateExerciseUseCase()
+    use_case = UpdateExerciseUseCase(uow=uow)
     exercise = await use_case.execute(input_dto=dto)
 
     return UpdateExerciseResponse(

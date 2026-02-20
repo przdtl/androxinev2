@@ -7,9 +7,12 @@ from dto.template_exercises.list_template_exercises import (
 from use_cases.template_exercises.list import (
     ListTemplateExercisesUseCase,
 )
-from ..schemas.common import CategorySchema
-from ..schemas.template_exercises.list import ExerciseSchema
-from ..schemas.template_exercises import (
+
+from presentation.api.dependencies.auth import UserDep
+from presentation.api.dependencies.uow import UOWDep
+from presentation.api.schemas.common import CategorySchema
+from presentation.api.schemas.template_exercises.list import ExerciseSchema
+from presentation.api.schemas.template_exercises import (
     ListTemplateExercisesResponse,
 )
 
@@ -24,13 +27,15 @@ router = APIRouter()
     response_model=Page[ListTemplateExercisesResponse],
 )
 async def list_template_excercises(
+    uow: UOWDep,
+    user_id: UserDep,
     params: Params = Depends(),
 ) -> Page[ListTemplateExercisesResponse]:
     dto = ListTemplateExercisesInputDTO(
         page=params.page,
         size=params.size,
     )
-    use_case = ListTemplateExercisesUseCase()
+    use_case = ListTemplateExercisesUseCase(uow=uow)
     template_exercises = await use_case.execute(input_dto=dto)
 
     items = [

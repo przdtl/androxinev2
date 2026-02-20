@@ -3,10 +3,12 @@ from dto.template_exercises import (
     ListTemplateExercisesOutputDTO,
 )
 
+from uow import UnitOfWork
+
 
 class ListTemplateExercisesUseCase:
-    def __init__(self):
-        pass
+    def __init__(self, uow: UnitOfWork):
+        self._uow = uow
 
     async def execute(
         self,

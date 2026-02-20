@@ -5,8 +5,10 @@ from fastapi import APIRouter
 from dto.exercises.restore_excercise import RestoreExerciseInputDTO
 from use_cases.exercises.restore import RestoreExerciseUseCase
 
-from ..schemas.common import CategorySchema
-from ..schemas.exercises import (
+from presentation.api.dependencies.auth import UserDep
+from presentation.api.dependencies.uow import UOWDep
+from presentation.api.schemas.common import CategorySchema
+from presentation.api.schemas.exercises import (
     RestoreExerciseResponse,
 )
 
@@ -22,9 +24,11 @@ router = APIRouter()
 )
 async def restore_excercise(
     id: uuid.UUID,
+    uow: UOWDep,
+    user_id: UserDep,
 ) -> RestoreExerciseResponse:
     dto = RestoreExerciseInputDTO(id=id)
-    use_case = RestoreExerciseUseCase()
+    use_case = RestoreExerciseUseCase(uow=uow)
     exercise = await use_case.execute(input_dto=dto)
 
     return RestoreExerciseResponse(

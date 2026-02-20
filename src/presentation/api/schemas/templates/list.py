@@ -3,7 +3,7 @@ import datetime
 
 from pydantic import BaseModel, Field
 
-from ..common import CategorySchema, DayOfWeek
+from presentation.api.schemas.common import CategorySchema, DayOfWeek
 
 
 class ExerciseSchema(BaseModel):

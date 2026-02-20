@@ -5,11 +5,12 @@ from dto.categories import (
     ListCategoriesInputDTO,
     ListCategoriesOutputDTO,
 )
+from uow import UnitOfWork
 
 
 class ListCategoriesUseCase:
-    def __init__(self):
-        pass
+    def __init__(self, uow: UnitOfWork):
+        self._uow = uow
 
     async def execute(
         self,

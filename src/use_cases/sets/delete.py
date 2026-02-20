@@ -3,10 +3,12 @@ from dto.sets import (
     DeleteSetOutputDTO,
 )
 
+from uow import UnitOfWork
+
 
 class DeleteSetUseCase:
-    def __init__(self):
-        pass
+    def __init__(self, uow: UnitOfWork):
+        self._uow = uow
 
     async def execute(
         self,

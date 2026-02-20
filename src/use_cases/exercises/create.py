@@ -7,10 +7,12 @@ from dto.exercises import (
 )
 from dto.exercises.create_excercise import CategorySchema
 
+from uow import UnitOfWork
+
 
 class CreateExerciseUseCase:
-    def __init__(self):
-        pass
+    def __init__(self, uow: UnitOfWork):
+        self._uow = uow
 
     async def execute(
         self,

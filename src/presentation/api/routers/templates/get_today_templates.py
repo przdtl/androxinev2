@@ -6,14 +6,16 @@ from use_cases.templates.get_today_templates import (
     GetTodayTemplatesUseCase,
 )
 
-from ..schemas.common import (
+from presentation.api.dependencies.auth import UserDep
+from presentation.api.dependencies.uow import UOWDep
+from presentation.api.schemas.common import (
     CategorySchema,
     DayOfWeek as DayOfWeekSchema,
 )
-from ..schemas.templates import (
+from presentation.api.schemas.templates import (
     GetTodayTemplatesResponse,
 )
-from ..schemas.templates.get_today_templates import (
+from presentation.api.schemas.templates.get_today_templates import (
     TemplateExerciseSchema,
     ExerciseSchema,
 )
@@ -30,10 +32,12 @@ router = APIRouter()
     response_model=Page[GetTodayTemplatesResponse],
 )
 async def get_today_templates(
+    uow: UOWDep,
+    user_id: UserDep,
     params: Params = Depends(),
 ) -> Page[GetTodayTemplatesResponse]:
     dto = GetTodayTemplatesInputDTO()
-    use_case = GetTodayTemplatesUseCase()
+    use_case = GetTodayTemplatesUseCase(uow=uow)
     templates = await use_case.execute(input_dto=dto)
 
     items = [

@@ -7,15 +7,17 @@ from dto.templates.create_template import (
 from dto.templates.create_template import DayOfWeek as DayOfWeekDTO
 from use_cases.templates.create import CreateTemplateUseCase
 
-from ..schemas.common import (
+from presentation.api.dependencies.auth import UserDep
+from presentation.api.dependencies.uow import UOWDep
+from presentation.api.schemas.common import (
     CategorySchema,
     DayOfWeek as DayOfWeekSchema,
 )
-from ..schemas.templates import (
+from presentation.api.schemas.templates import (
     CreateTemplateRequest,
     CreateTemplateResponse,
 )
-from ..schemas.templates.create import (
+from presentation.api.schemas.templates.create import (
     TemplateExerciseSchema,
     ExerciseSchema,
 )
@@ -32,6 +34,8 @@ router = APIRouter()
 )
 async def create_template(
     data: CreateTemplateRequest,
+    uow: UOWDep,
+    user_id: UserDep,
 ) -> CreateTemplateResponse:
     dto = CreateTemplateInputDTO(
         title=data.title,
@@ -46,7 +50,7 @@ async def create_template(
             for item in data.exercises
         ],
     )
-    use_case = CreateTemplateUseCase()
+    use_case = CreateTemplateUseCase(uow=uow)
     template = await use_case.execute(input_dto=dto)
 
     exercises = [
