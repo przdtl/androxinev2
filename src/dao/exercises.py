@@ -121,12 +121,16 @@ class ExerciseDAO:
         page: int,
         size: int,
         is_archived: bool | None = None,
+        category_id: uuid.UUID | None = None,
     ) -> list[Exercise]:
         offset = (page - 1) * size
         query = select(Exercise).where(Exercise.user_id == user_id)
 
         if is_archived is not None:
             query = query.where(Exercise.is_archived == is_archived)
+        
+        if category_id is not None:
+            query = query.where(Exercise.category_id == category_id)
 
         result = await self._session.execute(query.offset(offset).limit(size))
         return result.scalars().all()

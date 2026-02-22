@@ -26,6 +26,7 @@ class CreateSetUseCase:
             exercise_id=input_dto.exercise_id,
             weight=input_dto.weight,
             reps=input_dto.reps,
+            created_at=input_dto.created_at,
         )
 
         return CreateSetOutputDTO(

@@ -21,6 +21,7 @@ class CreateSetRequest(BaseModel):
     exercise_id: uuid.UUID
     weight: float = Field(gt=0)
     reps: int = Field(gt=0)
+    created_at: datetime.date | None = None
 
 
 class CreateSetResponse(BaseModel):

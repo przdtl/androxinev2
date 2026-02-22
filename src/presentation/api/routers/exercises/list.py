@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends
 from fastapi_pagination import Page, Params
+import uuid
 
 from dto.exercises import ListExercisesInputDTO
 from use_cases.exercises import ListExercisesUseCase
@@ -23,12 +24,14 @@ router = APIRouter()
 async def list_excercises(
     uow: UOWDep,
     user_id: UserDep,
+    category_id: uuid.UUID | None = None,
     params: Params = Depends(),
 ) -> Page[ListExercisesResponse]:
     dto = ListExercisesInputDTO(
         user_id=user_id,
         page=params.page,
         size=params.size,
+        category_id=category_id,
     )
     use_case = ListExercisesUseCase(uow=uow)
     exercises = await use_case.execute(input_dto=dto)

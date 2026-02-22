@@ -9,6 +9,7 @@ class CreateSetInputDTO(BaseModel):
     exercise_id: uuid.UUID
     weight: float
     reps: int
+    created_at: datetime.datetime | None = None
 
 
 class CategorySchema(BaseModel):

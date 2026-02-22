@@ -2,6 +2,10 @@ from .create import (
     CreateCategoryInputDTO,
     CreateCategoryOutputDTO,
 )
+from .delete import (
+    DeleteCategoryInputDTO,
+    DeleteCategoryOutputDTO,
+)
 from .get import (
     GetCategoryInputDTO,
     GetCategoryOutputDTO,
@@ -19,6 +23,8 @@ from .update import (
 __all__ = [
     "CreateCategoryInputDTO",
     "CreateCategoryOutputDTO",
+    "DeleteCategoryInputDTO",
+    "DeleteCategoryOutputDTO",
     "GetCategoryInputDTO",
     "GetCategoryOutputDTO",
     "ListCategoriesInputDTO",

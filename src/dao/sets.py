@@ -1,3 +1,4 @@
+import datetime
 import uuid
 
 from sqlalchemy import select
@@ -11,14 +12,10 @@ class SetsDAO:
         self._session = session
 
     async def get_by_id(self, set_id: uuid.UUID) -> Set | None:
-        result = await self._session.execute(
-            select(Set).where(Set.id == set_id)
-        )
+        result = await self._session.execute(select(Set).where(Set.id == set_id))
         return result.scalar_one_or_none()
 
-    async def get_by_user_and_id(
-        self, user_id: int, set_id: uuid.UUID
-    ) -> Set | None:
+    async def get_by_user_and_id(self, user_id: int, set_id: uuid.UUID) -> Set | None:
         result = await self._session.execute(
             select(Set).where(Set.user_id == user_id, Set.id == set_id)
         )
@@ -30,12 +27,14 @@ class SetsDAO:
         exercise_id: uuid.UUID,
         weight: float,
         reps: int,
+        created_at: datetime.datetime | None = None,
     ) -> Set:
         set_item = Set(
             user_id=user_id,
             exercise_id=exercise_id,
             weight=weight,
             reps=reps,
+            created_at=created_at or datetime.datetime.now(),
         )
         self._session.add(set_item)
         await self._session.flush()
@@ -72,14 +71,27 @@ class SetsDAO:
         user_id: int,
         page: int,
         size: int,
+        exercise_id: uuid.UUID | None = None,
+        created_from: datetime.date | None = None,
+        created_to: datetime.date | None = None,
     ) -> list[Set]:
         offset = (page - 1) * size
+        query = select(Set).where(Set.user_id == user_id)
+
+        if exercise_id is not None:
+            query = query.where(Set.exercise_id == exercise_id)
+
+        if created_from is not None:
+            query = query.where(Set.created_at >= created_from)
+
+        if created_to is not None:
+            query = query.where(Set.created_at <= created_to)
+
         result = await self._session.execute(
-            select(Set)
-            .where(Set.user_id == user_id)
-            .order_by(Set.created_at.desc())
+            query.order_by(Set.created_at.desc())
             .offset(offset)
             .limit(size)
+            .order_by(Set.created_at.desc())
         )
         return result.scalars().all()
 
@@ -100,7 +112,5 @@ class SetsDAO:
         return result.scalars().all()
 
     async def count_by_user_id(self, user_id: int) -> int:
-        result = await self._session.execute(
-            select(Set).where(Set.user_id == user_id)
-        )
+        result = await self._session.execute(select(Set).where(Set.user_id == user_id))
         return len(result.scalars().all())

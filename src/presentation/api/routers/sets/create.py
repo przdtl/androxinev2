@@ -29,6 +29,7 @@ async def create_set(
         exercise_id=data.exercise_id,
         weight=data.weight,
         reps=data.reps,
+        created_at=data.created_at,
     )
     use_case = CreateSetUseCase(uow=uow)
     set_item = await use_case.execute(input_dto=dto)

@@ -19,6 +19,7 @@ class ListExercisesUseCase:
             user_id=input_dto.user_id,
             page=input_dto.page,
             size=input_dto.size,
+            category_id=input_dto.category_id,
         )
 
         return [

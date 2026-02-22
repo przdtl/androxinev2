@@ -1,3 +1,6 @@
+import datetime
+import uuid
+
 from fastapi import APIRouter, Depends
 from fastapi_pagination import Page, paginate, Params
 
@@ -23,12 +26,18 @@ router = APIRouter()
 async def list_sets(
     uow: UOWDep,
     user_id: UserDep,
+    exercise_id: uuid.UUID | None = None,
+    created_from: datetime.date | None = None,
+    created_to: datetime.date | None = None,
     params: Params = Depends(),
 ) -> Page[ListSetsResponse]:
     dto = ListSetsInputDTO(
         user_id=user_id,
         page=params.page,
         size=params.size,
+        exercise_id=exercise_id,
+        created_from=created_from,
+        created_to=created_to,
     )
     use_case = ListSetsUseCase(uow=uow)
     sets = await use_case.execute(input_dto=dto)

@@ -9,8 +9,8 @@ class ListSetsInputDTO(BaseModel):
     page: int
     size: int
     exercise_id: uuid.UUID | None = None
-    created_from: datetime.date | None = None
-    created_to: datetime.date | None = None
+    created_from: datetime.datetime | None = None
+    created_to: datetime.datetime | None = None
 
 
 class CategorySchema(BaseModel):

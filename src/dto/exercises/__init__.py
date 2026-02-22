@@ -6,6 +6,10 @@ from .create import (
     CreateExerciseInputDTO,
     CreateExerciseOutputDTO,
 )
+from .delete import (
+    DeleteExerciseInputDTO,
+    DeleteExerciseOutputDTO,
+)
 from .get import (
     GetExerciseInputDTO,
     GetExerciseOutputDTO,
@@ -29,12 +33,12 @@ __all__ = [
     "ArchiveExerciseOutputDTO",
     "CreateExerciseInputDTO",
     "CreateExerciseOutputDTO",
+    "DeleteExerciseInputDTO",
+    "DeleteExerciseOutputDTO",
     "GetExerciseInputDTO",
     "GetExerciseOutputDTO",
     "ListExercisesInputDTO",
     "ListExercisesOutputDTO",
-    "ListUserExercisesInputDTO",
-    "ListUserExercisesOutputDTO",
     "RestoreExerciseInputDTO",
     "RestoreExerciseOutputDTO",
     "UpdateExerciseInputDTO",

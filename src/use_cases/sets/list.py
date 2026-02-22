@@ -19,6 +19,9 @@ class ListSetsUseCase:
             user_id=input_dto.user_id,
             page=input_dto.page,
             size=input_dto.size,
+            exercise_id=input_dto.exercise_id,
+            created_from=input_dto.created_from,
+            created_to=input_dto.created_to,
         )
 
         return [

@@ -7,6 +7,7 @@ class ListExercisesInputDTO(BaseModel):
     user_id: int
     page: int
     size: int
+    category_id: uuid.UUID | None = None
 
 
 class CategorySchema(BaseModel):
