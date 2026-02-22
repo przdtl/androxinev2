@@ -1,7 +1,6 @@
 import uuid
-import datetime
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from presentation.api.schemas.common import CategorySchema
 
@@ -17,17 +16,17 @@ class ExerciseSchema(BaseModel):
         from_attributes = True
 
 
-class SetSchema(BaseModel):
+class UpdateSetRequest(BaseModel):
+    weight: float | None = Field(default=None, ge=0)
+    reps: int | None = Field(default=None, ge=0)
+
+
+class UpdateSetResponse(BaseModel):
     id: uuid.UUID
     user_id: int
     exercise: ExerciseSchema
     weight: float
     reps: int
-    created_at: datetime.datetime
 
     class Config:
         from_attributes = True
-
-
-class ListSetsResponse(SetSchema):
-    pass

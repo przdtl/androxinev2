@@ -1,40 +1,44 @@
+import uuid
+
 from fastapi import APIRouter
 
-from dto.sets import CreateSetInputDTO
-from use_cases.sets import CreateSetUseCase
+from dto.sets import UpdateSetInputDTO
+from use_cases.sets import UpdateSetUseCase
 
 from presentation.api.dependencies.auth import UserDep
 from presentation.api.dependencies.uow import UOWDep
 from presentation.api.schemas.common import CategorySchema
-from presentation.api.schemas.sets.create import ExerciseSchema
-from presentation.api.schemas.sets import CreateSetRequest, CreateSetResponse
+from presentation.api.schemas.sets.update import ExerciseSchema
+from presentation.api.schemas.sets import UpdateSetRequest, UpdateSetResponse
 
 router = APIRouter()
 
 
-@router.post(
-    path="/",
-    summary="Создать новый сет",
-    description="Создает новый сет с указанными параметрами и возвращает его детали",
-    response_description="Детали созданного сета",
-    response_model=CreateSetResponse,
+@router.patch(
+    path="/{id}/",
+    summary="Обновить подход",
+    description="Обновляет подход по идентификатору",
+    response_description="Обновленные детали подхода",
+    response_model=UpdateSetResponse,
 )
-async def create_set(
-    data: CreateSetRequest,
+async def update_set(
+    id: uuid.UUID,
+    data: UpdateSetRequest,
     uow: UOWDep,
     user_id: UserDep,
-) -> CreateSetResponse:
-    dto = CreateSetInputDTO(
+) -> UpdateSetResponse:
+    dto = UpdateSetInputDTO(
         user_id=user_id,
-        exercise_id=data.exercise_id,
+        set_id=id,
         weight=data.weight,
         reps=data.reps,
     )
-    use_case = CreateSetUseCase(uow=uow)
+    use_case = UpdateSetUseCase(uow=uow)
     set_item = await use_case.execute(input_dto=dto)
 
-    return CreateSetResponse(
+    return UpdateSetResponse(
         id=set_item.id,
+        user_id=set_item.user_id,
         exercise=ExerciseSchema(
             id=set_item.exercise.id,
             title=set_item.exercise.title,
@@ -47,5 +51,4 @@ async def create_set(
         ),
         weight=set_item.weight,
         reps=set_item.reps,
-        created_at=set_item.created_at,
     )

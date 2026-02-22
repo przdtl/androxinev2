@@ -5,7 +5,7 @@ from dto.exercises import (
     ArchiveExerciseInputDTO,
     ArchiveExerciseOutputDTO,
 )
-from dto.exercises.archive_excercise import CategorySchema
+from dto.exercises.archive import CategorySchema
 
 from uow import UnitOfWork
 

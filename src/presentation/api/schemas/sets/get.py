@@ -1,5 +1,4 @@
 import uuid
-import datetime
 
 from pydantic import BaseModel
 
@@ -17,17 +16,12 @@ class ExerciseSchema(BaseModel):
         from_attributes = True
 
 
-class SetSchema(BaseModel):
+class GetSetResponse(BaseModel):
     id: uuid.UUID
     user_id: int
     exercise: ExerciseSchema
     weight: float
     reps: int
-    created_at: datetime.datetime
 
     class Config:
         from_attributes = True
-
-
-class ListSetsResponse(SetSchema):
-    pass

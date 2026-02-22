@@ -5,7 +5,7 @@ from dto.exercises import (
     RestoreExerciseInputDTO,
     RestoreExerciseOutputDTO,
 )
-from dto.exercises.restore_excercise import CategorySchema
+from dto.exercises.restore import CategorySchema
 
 from uow import UnitOfWork
 

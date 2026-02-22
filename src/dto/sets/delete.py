@@ -4,7 +4,8 @@ from pydantic import BaseModel
 
 
 class DeleteSetInputDTO(BaseModel):
-    id: uuid.UUID
+    set_id: uuid.UUID
+    user_id: int
 
 
 class DeleteSetOutputDTO(BaseModel):

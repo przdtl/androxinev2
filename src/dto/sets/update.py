@@ -1,9 +1,21 @@
 import uuid
-import datetime
 
 from pydantic import BaseModel
 
-from presentation.api.schemas.common import CategorySchema
+
+class UpdateSetInputDTO(BaseModel):
+    user_id: int
+    set_id: uuid.UUID
+    weight: float | None = None
+    reps: int | None = None
+
+
+class CategorySchema(BaseModel):
+    id: uuid.UUID
+    title: str
+
+    class Config:
+        from_attributes = True
 
 
 class ExerciseSchema(BaseModel):
@@ -17,17 +29,12 @@ class ExerciseSchema(BaseModel):
         from_attributes = True
 
 
-class SetSchema(BaseModel):
+class UpdateSetOutputDTO(BaseModel):
     id: uuid.UUID
     user_id: int
     exercise: ExerciseSchema
     weight: float
     reps: int
-    created_at: datetime.datetime
 
     class Config:
         from_attributes = True
-
-
-class ListSetsResponse(SetSchema):
-    pass

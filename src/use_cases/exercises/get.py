@@ -1,11 +1,8 @@
-import uuid
-import datetime
-
 from dto.exercises import (
     GetExerciseInputDTO,
     GetExerciseOutputDTO,
 )
-from dto.exercises.get_excercise import CategorySchema
+from dto.exercises.get import CategorySchema
 
 from uow import UnitOfWork
 
@@ -18,17 +15,22 @@ class GetExerciseUseCase:
         self,
         input_dto: GetExerciseInputDTO,
     ) -> GetExerciseOutputDTO:
+        exercise = await self._uow.exercises_dao.get_by_id(
+            exercise_id=input_dto.exercise_id,
+        )
+        if exercise is None:
+            raise ValueError("Exercise not found")
+
+        if exercise.user_id != input_dto.user_id:
+            raise ValueError("Exercise does not belong to the user")
+
         return GetExerciseOutputDTO(
-            id=input_dto.id,
-            title="Exercise 1",
-            short="Short description",
+            id=exercise.id,
+            title=exercise.title,
+            short=exercise.short,
             category=CategorySchema(
-                id=uuid.uuid4(),
-                title="Category 1",
-                created_at=datetime.datetime.now(),
-                updated_at=datetime.datetime.now(),
+                id=exercise.category.id,
+                title=exercise.category.title,
             ),
-            created_at=datetime.datetime.now(),
-            updated_at=datetime.datetime.now(),
-            is_archived=False,
+            is_archived=exercise.is_archived,
         )

@@ -11,8 +11,6 @@ class ExerciseSchema(BaseModel):
     title: str
     short: str
     category: CategorySchema
-    created_at: datetime.datetime
-    updated_at: datetime.datetime
     is_archived: bool
 
     class Config:
@@ -27,7 +25,6 @@ class CreateSetRequest(BaseModel):
 
 class CreateSetResponse(BaseModel):
     id: uuid.UUID
-    user_id: int
     exercise: ExerciseSchema
     weight: float
     reps: int

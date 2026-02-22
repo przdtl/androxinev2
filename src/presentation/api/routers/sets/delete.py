@@ -2,8 +2,8 @@ import uuid
 
 from fastapi import APIRouter
 
-from dto.sets.delete_set import DeleteSetInputDTO
-from use_cases.sets.delete import DeleteSetUseCase
+from dto.sets import DeleteSetInputDTO
+from use_cases.sets import DeleteSetUseCase
 
 from presentation.api.dependencies.auth import UserDep
 from presentation.api.dependencies.uow import UOWDep
@@ -24,7 +24,10 @@ async def delete_set(
     uow: UOWDep,
     user_id: UserDep,
 ) -> DeleteSetResponse:
-    dto = DeleteSetInputDTO(id=id)
+    dto = DeleteSetInputDTO(
+        set_id=id,
+        user_id=user_id,
+    )
     use_case = DeleteSetUseCase(uow=uow)
     await use_case.execute(input_dto=dto)
 

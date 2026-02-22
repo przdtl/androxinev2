@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from dto.exercises.create_excercise import CreateExerciseInputDTO
-from use_cases.exercises.create import CreateExerciseUseCase
+from dto.exercises import CreateExerciseInputDTO
+from use_cases.exercises import CreateExerciseUseCase
 
 from presentation.api.dependencies.auth import UserDep
 from presentation.api.dependencies.uow import UOWDep
@@ -28,6 +28,7 @@ async def create_exercise(
     user_id: UserDep,
 ) -> CreateExerciseResponse:
     dto = CreateExerciseInputDTO(
+        user_id=user_id,
         title=data.title,
         short=data.short,
         category_id=data.category_id,
@@ -42,10 +43,6 @@ async def create_exercise(
         category=CategorySchema(
             id=exercise.category.id,
             title=exercise.category.title,
-            created_at=exercise.category.created_at,
-            updated_at=exercise.category.updated_at,
         ),
-        created_at=exercise.created_at,
-        updated_at=exercise.updated_at,
         is_archived=exercise.is_archived,
     )

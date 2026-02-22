@@ -1,14 +1,22 @@
-from .create_set import (
+from .create import (
     CreateSetInputDTO,
     CreateSetOutputDTO,
 )
-from .delete_set import (
+from .delete import (
     DeleteSetInputDTO,
     DeleteSetOutputDTO,
 )
-from .list_sets import (
+from .get import (
+    GetSetInputDTO,
+    GetSetOutputDTO,
+)
+from .list import (
     ListSetsInputDTO,
     ListSetsOutputDTO,
+)
+from .update import (
+    UpdateSetInputDTO,
+    UpdateSetOutputDTO,
 )
 
 
@@ -17,6 +25,11 @@ __all__ = [
     "CreateSetOutputDTO",
     "DeleteSetInputDTO",
     "DeleteSetOutputDTO",
+    "GetSetInputDTO",
+    "GetSetOutputDTO",
     "ListSetsInputDTO",
+    "ListSetsOutputDTO",
+    "UpdateSetInputDTO",
+    "UpdateSetOutputDTO",
     "ListSetsOutputDTO",
 ]

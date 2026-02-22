@@ -1,11 +1,8 @@
-import uuid
-import datetime
-
 from dto.exercises import (
     CreateExerciseInputDTO,
     CreateExerciseOutputDTO,
 )
-from dto.exercises.create_excercise import CategorySchema
+from dto.exercises.create import CategorySchema
 
 from uow import UnitOfWork
 
@@ -18,17 +15,19 @@ class CreateExerciseUseCase:
         self,
         input_dto: CreateExerciseInputDTO,
     ) -> CreateExerciseOutputDTO:
-        return CreateExerciseOutputDTO(
-            id=uuid.uuid4(),
+        exercise = await self._uow.exercises_dao.create(
+            user_id=input_dto.user_id,
             title=input_dto.title,
             short=input_dto.short,
+            category_id=input_dto.category_id,
+        )
+        return CreateExerciseOutputDTO(
+            id=exercise.id,
+            title=exercise.title,
+            short=exercise.short,
             category=CategorySchema(
-                id=input_dto.category_id,
-                title="Category 1",
-                created_at=datetime.datetime.now(),
-                updated_at=datetime.datetime.now(),
+                id=exercise.category.id,
+                title=exercise.category.title,
             ),
-            created_at=datetime.datetime.now(),
-            updated_at=datetime.datetime.now(),
-            is_archived=False,
+            is_archived=exercise.is_archived,
         )

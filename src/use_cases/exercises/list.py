@@ -2,7 +2,7 @@ from dto.exercises import (
     ListExercisesInputDTO,
     ListExercisesOutputDTO,
 )
-from dto.exercises.list_excercises import CategorySchema
+from dto.exercises.list import CategorySchema
 
 from uow import UnitOfWork
 

@@ -1,12 +1,11 @@
 from fastapi import APIRouter, Depends
-from fastapi_pagination import Page, paginate, Params
+from fastapi_pagination import Page, Params
 
-from dto.exercises.list_excercises import ListExercisesInputDTO
-from use_cases.exercises.list import ListExercisesUseCase
+from dto.exercises import ListExercisesInputDTO
+from use_cases.exercises import ListExercisesUseCase
 
 from presentation.api.dependencies.auth import UserDep
 from presentation.api.dependencies.uow import UOWDep
-from presentation.api.schemas.common import CategorySchema
 from presentation.api.schemas.exercises import (
     ListExercisesResponse,
 )
@@ -35,23 +34,3 @@ async def list_excercises(
     exercises = await use_case.execute(input_dto=dto)
 
     return Page.create(items=exercises, total=len(exercises), params=params)
-
-    # items = [
-    #     ListExercisesResponse(
-    #         id=exercise.id,
-    #         title=exercise.title,
-    #         short=exercise.short,
-    #         category=CategorySchema(
-    #             id=exercise.category.id,
-    #             title=exercise.category.title,
-    #             created_at=exercise.category.created_at,
-    #             updated_at=exercise.category.updated_at,
-    #         ),
-    #         created_at=exercise.created_at,
-    #         updated_at=exercise.updated_at,
-    #         is_archived=exercise.is_archived,
-    #     )
-    #     for exercise in exercises
-    # ]
-
-    # return paginate(items, params)

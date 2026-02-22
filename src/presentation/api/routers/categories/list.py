@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from fastapi_pagination import Page, Params
 
-from dto.categories.list_categories import ListCategoriesInputDTO
+from dto.categories.list import ListCategoriesInputDTO
 
 from use_cases.categories.list import ListCategoriesUseCase
 

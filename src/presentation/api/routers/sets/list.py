@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends
 from fastapi_pagination import Page, paginate, Params
 
-from dto.sets.list_sets import ListSetsInputDTO
-from use_cases.sets.list import ListSetsUseCase
+from dto.sets import ListSetsInputDTO
+from use_cases.sets import ListSetsUseCase
 
 from presentation.api.dependencies.auth import UserDep
 from presentation.api.dependencies.uow import UOWDep
@@ -26,6 +26,7 @@ async def list_sets(
     params: Params = Depends(),
 ) -> Page[ListSetsResponse]:
     dto = ListSetsInputDTO(
+        user_id=user_id,
         page=params.page,
         size=params.size,
     )
@@ -43,11 +44,7 @@ async def list_sets(
                 category=CategorySchema(
                     id=set_item.exercise.category.id,
                     title=set_item.exercise.category.title,
-                    created_at=set_item.exercise.category.created_at,
-                    updated_at=set_item.exercise.category.updated_at,
                 ),
-                created_at=set_item.exercise.created_at,
-                updated_at=set_item.exercise.updated_at,
                 is_archived=set_item.exercise.is_archived,
             ),
             weight=set_item.weight,

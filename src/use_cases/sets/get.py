@@ -1,34 +1,28 @@
 from dto.sets import (
-    CreateSetInputDTO,
-    CreateSetOutputDTO,
+    GetSetInputDTO,
+    GetSetOutputDTO,
 )
-from dto.sets.create import ExerciseSchema, CategorySchema
+from dto.sets.get import ExerciseSchema, CategorySchema
 
 from uow import UnitOfWork
 
 
-class CreateSetUseCase:
+class GetSetUseCase:
     def __init__(self, uow: UnitOfWork):
         self._uow = uow
 
     async def execute(
         self,
-        input_dto: CreateSetInputDTO,
-    ) -> CreateSetOutputDTO:
-        exercise = await self._uow.exercises_dao.get_by_id(
-            exercise_id=input_dto.exercise_id
-        )
-        if not exercise:
-            raise ValueError("Exercise not found")
-
-        set_item = await self._uow.sets_dao.create(
+        input_dto: GetSetInputDTO,
+    ) -> GetSetOutputDTO:
+        set_item = await self._uow.sets_dao.get_by_user_and_id(
             user_id=input_dto.user_id,
-            exercise_id=input_dto.exercise_id,
-            weight=input_dto.weight,
-            reps=input_dto.reps,
+            set_id=input_dto.set_id,
         )
+        if not set_item:
+            raise ValueError("Set not found or does not belong to the user")
 
-        return CreateSetOutputDTO(
+        return GetSetOutputDTO(
             id=set_item.id,
             user_id=set_item.user_id,
             exercise=ExerciseSchema(
@@ -43,5 +37,4 @@ class CreateSetUseCase:
             ),
             weight=set_item.weight,
             reps=set_item.reps,
-            created_at=set_item.created_at,
         )

@@ -1,5 +1,4 @@
 import uuid
-import datetime
 
 from pydantic import BaseModel, Field
 
@@ -9,7 +8,6 @@ from presentation.api.schemas.common import CategorySchema
 class UpdateExerciseRequest(BaseModel):
     title: str | None = Field(default=None, min_length=1)
     short: str | None = Field(default=None, min_length=1, max_length=10)
-    is_archived: bool | None = None
 
 
 class UpdateExerciseResponse(BaseModel):
@@ -17,8 +15,6 @@ class UpdateExerciseResponse(BaseModel):
     title: str
     short: str
     category: CategorySchema
-    created_at: datetime.datetime
-    updated_at: datetime.datetime
     is_archived: bool
 
     class Config:

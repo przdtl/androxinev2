@@ -1,10 +1,15 @@
 import uuid
 import datetime
 
+from typing import TYPE_CHECKING
+
 from sqlalchemy import ForeignKey, CheckConstraint
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from db.base import Base
+
+if TYPE_CHECKING:
+    from models import User, Exercise
 
 
 class Set(Base):
@@ -22,6 +27,9 @@ class Set(Base):
         default=None,
         onupdate=datetime.datetime.now,
     )
+
+    user: Mapped["User"] = relationship(back_populates="sets", lazy="selectin")
+    exercise: Mapped["Exercise"] = relationship(lazy="selectin")
 
     __table_args__ = (
         CheckConstraint(

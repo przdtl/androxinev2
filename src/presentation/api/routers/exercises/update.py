@@ -2,8 +2,8 @@ import uuid
 
 from fastapi import APIRouter
 
-from dto.exercises.update_excercise import UpdateExerciseInputDTO
-from use_cases.exercises.update import UpdateExerciseUseCase
+from dto.exercises import UpdateExerciseInputDTO
+from use_cases.exercises import UpdateExerciseUseCase
 
 from presentation.api.dependencies.auth import UserDep
 from presentation.api.dependencies.uow import UOWDep
@@ -30,10 +30,10 @@ async def update_excercise(
     user_id: UserDep,
 ) -> UpdateExerciseResponse:
     dto = UpdateExerciseInputDTO(
-        id=id,
+        exercise_id=id,
+        user_id=user_id,
         title=data.title,
         short=data.short,
-        is_archived=data.is_archived,
     )
     use_case = UpdateExerciseUseCase(uow=uow)
     exercise = await use_case.execute(input_dto=dto)
@@ -45,10 +45,6 @@ async def update_excercise(
         category=CategorySchema(
             id=exercise.category.id,
             title=exercise.category.title,
-            created_at=exercise.category.created_at,
-            updated_at=exercise.category.updated_at,
         ),
-        created_at=exercise.created_at,
-        updated_at=exercise.updated_at,
         is_archived=exercise.is_archived,
     )

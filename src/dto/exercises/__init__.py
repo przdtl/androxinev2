@@ -1,28 +1,24 @@
-from .archive_excercise import (
+from .archive import (
     ArchiveExerciseInputDTO,
     ArchiveExerciseOutputDTO,
 )
-from .create_excercise import (
+from .create import (
     CreateExerciseInputDTO,
     CreateExerciseOutputDTO,
 )
-from .get_excercise import (
+from .get import (
     GetExerciseInputDTO,
     GetExerciseOutputDTO,
 )
-from .list_excercises import (
+from .list import (
     ListExercisesInputDTO,
     ListExercisesOutputDTO,
 )
-from .list_user_excercises import (
-    ListUserExercisesInputDTO,
-    ListUserExercisesOutputDTO,
-)
-from .restore_excercise import (
+from .restore import (
     RestoreExerciseInputDTO,
     RestoreExerciseOutputDTO,
 )
-from .update_excercise import (
+from .update import (
     UpdateExerciseInputDTO,
     UpdateExerciseOutputDTO,
 )

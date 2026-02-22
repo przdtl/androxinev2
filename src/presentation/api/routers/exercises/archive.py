@@ -2,8 +2,8 @@ import uuid
 
 from fastapi import APIRouter
 
-from dto.exercises.archive_excercise import ArchiveExerciseInputDTO
-from use_cases.exercises.archive import ArchiveExerciseUseCase
+from dto.exercises import ArchiveExerciseInputDTO
+from use_cases.exercises import ArchiveExerciseUseCase
 
 from presentation.api.dependencies.auth import UserDep
 from presentation.api.dependencies.uow import UOWDep

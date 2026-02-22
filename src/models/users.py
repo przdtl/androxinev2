@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 if TYPE_CHECKING:
-    from models import Exercise, Category
+    from models import Exercise, Category, Set
 
 from db.base import Base
 
@@ -21,5 +21,8 @@ class User(Base):
         back_populates="user", lazy="selectin"
     )
     categories: Mapped[list["Category"]] = relationship(
+        back_populates="user", lazy="selectin"
+    )
+    sets: Mapped[list["Set"]] = relationship(
         back_populates="user", lazy="selectin"
     )

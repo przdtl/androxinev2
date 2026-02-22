@@ -1,20 +1,16 @@
-import datetime
 import uuid
 
 from pydantic import BaseModel
 
 
-class CreateSetInputDTO(BaseModel):
-    exercise_id: uuid.UUID
-    weight: float
-    reps: int
+class GetSetInputDTO(BaseModel):
+    user_id: int
+    set_id: uuid.UUID
 
 
 class CategorySchema(BaseModel):
     id: uuid.UUID
     title: str
-    created_at: datetime.datetime
-    updated_at: datetime.datetime
 
     class Config:
         from_attributes = True
@@ -25,21 +21,18 @@ class ExerciseSchema(BaseModel):
     title: str
     short: str
     category: CategorySchema
-    created_at: datetime.datetime
-    updated_at: datetime.datetime
     is_archived: bool
 
     class Config:
         from_attributes = True
 
 
-class CreateSetOutputDTO(BaseModel):
+class GetSetOutputDTO(BaseModel):
     id: uuid.UUID
     user_id: int
     exercise: ExerciseSchema
     weight: float
     reps: int
-    created_at: datetime.datetime
 
     class Config:
         from_attributes = True
