@@ -1,9 +1,14 @@
 import uuid
 
+from typing import TYPE_CHECKING
+
 from sqlalchemy import ForeignKey, UniqueConstraint
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from db.base import Base
+
+if TYPE_CHECKING:
+    from models import User
 
 
 class Category(Base):
@@ -12,6 +17,11 @@ class Category(Base):
     id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
     user_id: Mapped[int] = mapped_column(ForeignKey("user.id", ondelete="CASCADE"))
     title: Mapped[str]
+
+    user: Mapped["User"] = relationship(back_populates="categories", lazy="selectin")
+    exercises: Mapped[list["Exercise"]] = relationship(
+        back_populates="category", lazy="selectin"
+    )
 
     __table_args__ = (
         UniqueConstraint(
@@ -35,6 +45,11 @@ class Exercise(Base):
     )
     short: Mapped[str] = mapped_column(nullable=False)
     is_archived: Mapped[bool] = mapped_column(default=False)
+
+    user: Mapped["User"] = relationship(back_populates="exercises", lazy="selectin")
+    category: Mapped["Category"] = relationship(
+        back_populates="exercises", lazy="selectin"
+    )
 
     __table_args__ = (
         UniqueConstraint(

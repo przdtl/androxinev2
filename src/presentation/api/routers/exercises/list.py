@@ -27,28 +27,31 @@ async def list_excercises(
     params: Params = Depends(),
 ) -> Page[ListExercisesResponse]:
     dto = ListExercisesInputDTO(
+        user_id=user_id,
         page=params.page,
         size=params.size,
     )
     use_case = ListExercisesUseCase(uow=uow)
     exercises = await use_case.execute(input_dto=dto)
 
-    items = [
-        ListExercisesResponse(
-            id=exercise.id,
-            title=exercise.title,
-            short=exercise.short,
-            category=CategorySchema(
-                id=exercise.category.id,
-                title=exercise.category.title,
-                created_at=exercise.category.created_at,
-                updated_at=exercise.category.updated_at,
-            ),
-            created_at=exercise.created_at,
-            updated_at=exercise.updated_at,
-            is_archived=exercise.is_archived,
-        )
-        for exercise in exercises
-    ]
+    return Page.create(items=exercises, total=len(exercises), params=params)
 
-    return paginate(items, params)
+    # items = [
+    #     ListExercisesResponse(
+    #         id=exercise.id,
+    #         title=exercise.title,
+    #         short=exercise.short,
+    #         category=CategorySchema(
+    #             id=exercise.category.id,
+    #             title=exercise.category.title,
+    #             created_at=exercise.category.created_at,
+    #             updated_at=exercise.category.updated_at,
+    #         ),
+    #         created_at=exercise.created_at,
+    #         updated_at=exercise.updated_at,
+    #         is_archived=exercise.is_archived,
+    #     )
+    #     for exercise in exercises
+    # ]
+
+    # return paginate(items, params)

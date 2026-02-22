@@ -1,3 +1,4 @@
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio.session import AsyncSession
 
 from models.users import User
@@ -23,13 +24,13 @@ class UsersDAO:
             photo_url=photo_url,
         )
         self._session.add(new_user)
+        await self._session.flush()
+
         return new_user
 
     async def get_by_id(self, telegram_id: int) -> User | None:
-        user = await self._session.execute(
-            User.__table__.select().where(User.id == telegram_id)
-        )
-        return user.scalar_one_or_none()
+        result = await self._session.execute(select(User).where(User.id == telegram_id))
+        return result.scalar_one_or_none()
 
     async def update(
         self,
@@ -51,5 +52,7 @@ class UsersDAO:
             user.username = username
         if photo_url is not None:
             user.photo_url = photo_url
+
+        await self._session.flush()
 
         return user

@@ -1,6 +1,3 @@
-import uuid
-import datetime
-
 from dto.exercises import (
     ListExercisesInputDTO,
     ListExercisesOutputDTO,
@@ -18,19 +15,22 @@ class ListExercisesUseCase:
         self,
         input_dto: ListExercisesInputDTO,
     ) -> list[ListExercisesOutputDTO]:
+        exercises = await self._uow.exercises_dao.list_by_user_id(
+            user_id=input_dto.user_id,
+            page=input_dto.page,
+            size=input_dto.size,
+        )
+
         return [
             ListExercisesOutputDTO(
-                id=uuid.uuid4(),
-                title="Exercise 1",
-                short="Short description",
+                id=exercise.id,
+                title=exercise.title,
+                short=exercise.short,
                 category=CategorySchema(
-                    id=uuid.uuid4(),
-                    title="Category 1",
-                    created_at=datetime.datetime.now(),
-                    updated_at=datetime.datetime.now(),
+                    id=exercise.category.id,
+                    title=exercise.category.title,
                 ),
-                created_at=datetime.datetime.now(),
-                updated_at=datetime.datetime.now(),
-                is_archived=False,
+                is_archived=exercise.is_archived,
             )
+            for exercise in exercises
         ]

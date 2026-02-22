@@ -1,6 +1,3 @@
-import uuid
-import datetime
-
 from dto.categories import (
     ListCategoriesInputDTO,
     ListCategoriesOutputDTO,
@@ -16,11 +13,16 @@ class ListCategoriesUseCase:
         self,
         input_dto: ListCategoriesInputDTO,
     ) -> list[ListCategoriesOutputDTO]:
+        categories = await self._uow.categories_dao.list_by_user_id(
+            user_id=input_dto.user_id,
+            page=input_dto.page,
+            size=input_dto.size,
+        )
+
         return [
             ListCategoriesOutputDTO(
-                id=uuid.uuid4(),
-                title="Category 1",
-                created_at=datetime.datetime.now(),
-                updated_at=datetime.datetime.now(),
+                id=category.id,
+                title=category.title,
             )
+            for category in categories
         ]

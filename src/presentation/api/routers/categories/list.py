@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from fastapi_pagination import Page, paginate, Params
+from fastapi_pagination import Page, Params
 
 from dto.categories.list_categories import ListCategoriesInputDTO
 
@@ -27,20 +27,11 @@ async def list_categories(
     params: Params = Depends(),
 ) -> Page[ListCategoriesResponse]:
     dto = ListCategoriesInputDTO(
+        user_id=user_id,
         page=params.page,
         size=params.size,
     )
     use_case = ListCategoriesUseCase(uow=uow)
     categories = await use_case.execute(input_dto=dto)
 
-    items = [
-        ListCategoriesResponse(
-            id=category.id,
-            title=category.title,
-            created_at=category.created_at,
-            updated_at=category.updated_at,
-        )
-        for category in categories
-    ]
-
-    return paginate(items, params)
+    return Page.create(items=categories, total=len(categories), params=params)

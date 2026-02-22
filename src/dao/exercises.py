@@ -1,6 +1,7 @@
-from models import Exercise, Category
-
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio.session import AsyncSession
+
+from models import Exercise, Category
 
 
 class ExerciseDAO:
@@ -26,3 +27,18 @@ class ExerciseDAO:
         ]
 
         self._session.add_all(default_exercises)
+
+    async def list_by_user_id(
+        self,
+        user_id: int,
+        page: int,
+        size: int,
+    ) -> list[Exercise]:
+        offset = (page - 1) * size
+        query = await self._session.execute(
+            select(Exercise)
+            .where(Exercise.user_id == user_id)
+            .offset(offset)
+            .limit(size)
+        )
+        return query.scalars().all()

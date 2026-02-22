@@ -39,8 +39,6 @@ async def archive_excercise(
         category=CategorySchema(
             id=exercise.category.id,
             title=exercise.category.title,
-            created_at=exercise.category.created_at,
-            updated_at=exercise.category.updated_at,
         ),
         created_at=exercise.created_at,
         updated_at=exercise.updated_at,

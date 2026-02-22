@@ -6,6 +6,6 @@ class PayloadDataDTO(BaseModel):
 
 
 class PayloadDTO(BaseModel):
-    sub: int
+    sub: str
     iat: int
     exp: int

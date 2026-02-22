@@ -5,7 +5,6 @@ from .create import router as create_router
 from .update import router as update_router
 from .get import router as get_router
 from .archive import router as archive_router
-from .list_user_excercises import router as list_user_excercises_router
 from .restore import router as restore_router
 
 router = APIRouter(
@@ -18,7 +17,6 @@ router.include_router(create_router)
 router.include_router(update_router)
 router.include_router(get_router)
 router.include_router(archive_router)
-router.include_router(list_user_excercises_router)
 router.include_router(restore_router)
 
 __all__ = [

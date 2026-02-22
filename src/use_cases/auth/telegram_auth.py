@@ -1,5 +1,6 @@
 from models import User
 
+from dto.telegram import TelegramInitDataDTO
 from dto.auth import TelegramAuthInputDTO, TelegramAuthOutputDTO, PayloadDataDTO
 
 from services.jwt import JWTService
@@ -43,7 +44,7 @@ class TelegramAuthUseCase:
             token_type="bearer",
         )
 
-    async def _get_or_create_user(self, telegram_user) -> User:
+    async def _get_or_create_user(self, telegram_user: TelegramInitDataDTO) -> User:
         user = await self._uow.users_dao.get_by_id(
             telegram_id=telegram_user.telegram_id,
         )

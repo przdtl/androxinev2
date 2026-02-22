@@ -1,6 +1,5 @@
 import uuid
 import enum
-import datetime
 
 from pydantic import BaseModel
 
@@ -23,8 +22,6 @@ class ErrorResponse(BaseModel):
 class CategorySchema(BaseModel):
     id: uuid.UUID
     title: str
-    created_at: datetime.datetime
-    updated_at: datetime.datetime
 
     class Config:
         from_attributes = True

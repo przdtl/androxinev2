@@ -17,6 +17,7 @@ router = APIRouter()
 
 @router.post(
     path="/{id}/restore/",
+    deprecated=True,
     summary="Восстановить упражнение",
     description="Восстанавливает упражнение по идентификатору",
     response_description="Результат восстановления",
@@ -38,8 +39,6 @@ async def restore_excercise(
         category=CategorySchema(
             id=exercise.category.id,
             title=exercise.category.title,
-            created_at=exercise.category.created_at,
-            updated_at=exercise.category.updated_at,
         ),
         created_at=exercise.created_at,
         updated_at=exercise.updated_at,

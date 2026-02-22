@@ -1,8 +1,6 @@
 import jwt
 import datetime
 
-from typing import Any
-
 from dto.auth import PayloadDTO, PayloadDataDTO
 
 
@@ -23,7 +21,7 @@ class JWTService:
     ) -> str:
         now = datetime.datetime.now(datetime.UTC)
         payload = PayloadDTO(
-            sub=data.telegram_id,
+            sub=str(data.telegram_id),
             iat=int(now.timestamp()),
             exp=int(
                 (
