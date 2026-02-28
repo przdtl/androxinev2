@@ -6,6 +6,7 @@ from .exercises import router as excercises_router
 from .sets import router as sets_router
 from .template_exercises import router as template_exercises_router
 from .templates import router as templates_router
+from .telegram_webhook import router as telegram_webhook_router
 
 router = APIRouter()
 
@@ -15,6 +16,7 @@ router.include_router(excercises_router)
 router.include_router(sets_router)
 router.include_router(template_exercises_router)
 router.include_router(templates_router)
+router.include_router(telegram_webhook_router)
 
 
 __all__ = [
