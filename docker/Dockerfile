@@ -36,4 +36,6 @@ COPY alembic.ini ./
 COPY ./src ./src
 COPY ./docker/scripts ./scripts
 
+RUN chmod +x ./scripts
+
 ENTRYPOINT ["sh", "./scripts/entrypoint.sh"]
