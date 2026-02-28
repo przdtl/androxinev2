@@ -37,7 +37,6 @@ lint:
 .PHONY: prod-up
 prod-up:
 	docker compose --env-file .env.prod -f docker-compose.prod.yml up --build -d
-	docker compose --env-file .env.prod -f docker-compose.prod.yml logs -f
 
 .PHONY: prod-down
 prod-down:
