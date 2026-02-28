@@ -19,13 +19,11 @@ jobs:
           ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
 
       - name: Deploy over SSH
-        env:
-          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
         run: |
           ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << EOF
             set -e
 
-            cd \$DEPLOY_PATH || exit 1
+            cd "${{ secrets.DEPLOY_PATH }}" || exit 1
 
             if [ ! -d ".git" ]; then
               echo "Repository not initialized. Initializing..."
