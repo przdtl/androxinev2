@@ -34,7 +34,7 @@ jobs:
             fi
 
             git fetch origin
-            git reset --hard origin/main
+            git reset --hard origin/master
 
             # ---------- ENV BACKUP ----------
             if [ -f ".env.prod" ]; then
