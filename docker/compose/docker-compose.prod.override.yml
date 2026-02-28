@@ -6,9 +6,7 @@ services:
       dockerfile: docker/Dockerfile
     command: ./scripts/prod.sh
     env_file:
-      - ../../.env.dev
-    volumes:
-      - ../../logs/:/app/logs/
+      - ../../.env.prod
     ports:
       - "8186:8000"
 
