@@ -18,6 +18,10 @@ from .update import (
     UpdateSetInputDTO,
     UpdateSetOutputDTO,
 )
+from .create_by_short import (
+    CreateSetByExerciseShortInputDTO,
+    CreateSetByExerciseShortOutputDTO,
+)
 
 
 __all__ = [
@@ -32,4 +36,6 @@ __all__ = [
     "UpdateSetInputDTO",
     "UpdateSetOutputDTO",
     "ListSetsOutputDTO",
+    "CreateSetByExerciseShortInputDTO",
+    "CreateSetByExerciseShortOutputDTO",
 ]

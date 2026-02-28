@@ -26,6 +26,16 @@ class ExerciseDAO:
         )
         return result.scalar_one_or_none()
 
+    async def get_by_user_and_short(self, user_id: int, short: str) -> Exercise | None:
+        result = await self._session.execute(
+            select(Exercise).where(
+                Exercise.user_id == user_id,
+                Exercise.short == short,
+                Exercise.is_archived == False,
+            )
+        )
+        return result.scalar_one_or_none()
+
     async def create(
         self,
         user_id: int,
@@ -128,7 +138,7 @@ class ExerciseDAO:
 
         if is_archived is not None:
             query = query.where(Exercise.is_archived == is_archived)
-        
+
         if category_id is not None:
             query = query.where(Exercise.category_id == category_id)
 

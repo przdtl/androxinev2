@@ -11,6 +11,8 @@ class Settings(BaseSettings):
 
     # Telegram
     TELEGRAM_BOT_TOKEN: str = "your_bot_token"
+    TELEGRAM_WEBHOOK_URL: str = ""  # https://yourdomain.com/webhook/telegram
+    TELEGRAM_WEBHOOK_PATH: str = "/webhook/telegram"
 
     # DB
     DB_HOST: str = "db"
