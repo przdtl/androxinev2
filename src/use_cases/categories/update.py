@@ -2,6 +2,7 @@ from dto.categories import (
     UpdateCategoryInputDTO,
     UpdateCategoryOutputDTO,
 )
+from exceptions.categories import CategoryNotAccessibleError
 
 from uow import UnitOfWork
 
@@ -20,7 +21,7 @@ class UpdateCategoryUseCase:
             category_id=input_dto.category_id,
         )
         if category is None:
-            raise ValueError("Category not found or does not belong to the user")
+            raise CategoryNotAccessibleError()
 
         # Обновляем категорию
         updated_category = await self._uow.categories_dao.update(

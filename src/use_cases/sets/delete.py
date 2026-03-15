@@ -2,6 +2,7 @@ from dto.sets import (
     DeleteSetInputDTO,
     DeleteSetOutputDTO,
 )
+from exceptions.sets import SetNotAccessibleError
 
 from uow import UnitOfWork
 
@@ -19,7 +20,7 @@ class DeleteSetUseCase:
             set_id=input_dto.set_id,
         )
         if not set_item:
-            raise ValueError("Set not found or does not belong to the user")
+            raise SetNotAccessibleError()
 
         await self._uow.sets_dao.delete(set_id=input_dto.set_id)
         return DeleteSetOutputDTO()

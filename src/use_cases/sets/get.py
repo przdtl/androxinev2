@@ -3,6 +3,7 @@ from dto.sets import (
     GetSetOutputDTO,
 )
 from dto.sets.get import ExerciseSchema, CategorySchema
+from exceptions.sets import SetNotAccessibleError
 
 from uow import UnitOfWork
 
@@ -20,7 +21,7 @@ class GetSetUseCase:
             set_id=input_dto.set_id,
         )
         if not set_item:
-            raise ValueError("Set not found or does not belong to the user")
+            raise SetNotAccessibleError()
 
         return GetSetOutputDTO(
             id=set_item.id,

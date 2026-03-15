@@ -3,6 +3,7 @@ from dto.sets import (
     UpdateSetOutputDTO,
 )
 from dto.sets.update import ExerciseSchema, CategorySchema
+from exceptions.sets import SetNotAccessibleError
 
 from uow import UnitOfWork
 
@@ -20,7 +21,7 @@ class UpdateSetUseCase:
             set_id=input_dto.set_id,
         )
         if not set_item:
-            raise ValueError("Set not found or does not belong to the user")
+            raise SetNotAccessibleError()
 
         updated_set = await self._uow.sets_dao.update(
             set_id=input_dto.set_id,
