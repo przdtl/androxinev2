@@ -1,6 +1,6 @@
 import uuid
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 
 from dto.exercises import DeleteExerciseInputDTO
 from use_cases.exercises import DeleteExerciseUseCase
@@ -29,9 +29,6 @@ async def delete_exercise(
         exercise_id=id,
     )
     use_case = DeleteExerciseUseCase(uow=uow)
-    try:
-        await use_case.execute(input_dto=dto)
-    except ValueError as e:
-        raise HTTPException(status_code=404, detail=str(e))
+    await use_case.execute(input_dto=dto)
 
     return DeleteExerciseResponse()

@@ -1,6 +1,6 @@
 import uuid
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 
 from dto.categories import DeleteCategoryInputDTO
 from use_cases.categories import DeleteCategoryUseCase
@@ -29,9 +29,6 @@ async def delete_category(
         category_id=id,
     )
     use_case = DeleteCategoryUseCase(uow=uow)
-    try:
-        await use_case.execute(input_dto=dto)
-    except ValueError as e:
-        raise HTTPException(status_code=404, detail=str(e))
+    await use_case.execute(input_dto=dto)
 
     return DeleteCategoryResponse()

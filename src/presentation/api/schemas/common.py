@@ -1,7 +1,7 @@
 import uuid
 import enum
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class DayOfWeek(enum.IntEnum):
@@ -14,9 +14,21 @@ class DayOfWeek(enum.IntEnum):
     SUNDAY = 6
 
 
-class ErrorResponse(BaseModel):
-    detail: str
+class ErrorDetail(BaseModel):
+    field: str | None = None
     code: str
+    message: str
+
+
+class APIError(BaseModel):
+    code: str
+    message: str
+    details: list[ErrorDetail] = Field(default_factory=list)
+    request_id: str | None = None
+
+
+class ErrorResponse(BaseModel):
+    error: APIError
 
 
 class CategorySchema(BaseModel):

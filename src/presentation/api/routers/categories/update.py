@@ -1,6 +1,6 @@
 import uuid
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 
 from dto.categories.update import UpdateCategoryInputDTO
 from use_cases.categories.update import UpdateCategoryUseCase
@@ -35,10 +35,7 @@ async def update_category(
         title=data.title,
     )
     use_case = UpdateCategoryUseCase(uow=uow)
-    try:
-        category = await use_case.execute(input_dto=dto)
-    except ValueError as e:
-        raise HTTPException(status_code=404, detail=str(e))
+    category = await use_case.execute(input_dto=dto)
 
     return UpdateCategoryResponse(
         id=category.id,

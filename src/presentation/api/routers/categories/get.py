@@ -1,6 +1,6 @@
 import uuid
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 
 from dto.categories.get import GetCategoryInputDTO
 from use_cases.categories.get import GetCategoryUseCase
@@ -32,10 +32,7 @@ async def get_category(
         category_id=id,
     )
     use_case = GetCategoryUseCase(uow=uow)
-    try:
-        category = await use_case.execute(input_dto=dto)
-    except ValueError as e:
-        raise HTTPException(status_code=404, detail=str(e))
+    category = await use_case.execute(input_dto=dto)
 
     return GetCategoryResponse(
         id=category.id,
