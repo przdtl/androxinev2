@@ -7,6 +7,7 @@ from use_cases.categories.get import GetCategoryUseCase
 
 from presentation.api.dependencies.auth import UserDep
 from presentation.api.dependencies.uow import UOWDep
+from presentation.api.responses.categories import GET_CATEGORY_RESPONSES
 from presentation.api.schemas.categories import (
     GetCategoryResponse,
 )
@@ -21,6 +22,7 @@ router = APIRouter()
     description="Возвращает категорию по идентификатору",
     response_description="Детали категории",
     response_model=GetCategoryResponse,
+    responses=GET_CATEGORY_RESPONSES,
 )
 async def get_category(
     id: uuid.UUID,

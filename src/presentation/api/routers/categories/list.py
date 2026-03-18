@@ -7,6 +7,7 @@ from use_cases.categories.list import ListCategoriesUseCase
 
 from presentation.api.dependencies.auth import UserDep
 from presentation.api.dependencies.uow import UOWDep
+from presentation.api.responses.categories import LIST_CATEGORY_RESPONSES
 from presentation.api.schemas.categories import (
     ListCategoriesResponse,
 )
@@ -20,6 +21,7 @@ router = APIRouter()
     description="Возвращает список категорий",
     response_description="Список категорий",
     response_model=Page[ListCategoriesResponse],
+    responses=LIST_CATEGORY_RESPONSES,
 )
 async def list_categories(
     uow: UOWDep,

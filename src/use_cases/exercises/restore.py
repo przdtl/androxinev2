@@ -1,5 +1,4 @@
 import uuid
-import datetime
 
 from dto.exercises import (
     RestoreExerciseInputDTO,
@@ -8,6 +7,7 @@ from dto.exercises import (
 from dto.exercises.restore import CategorySchema
 
 from uow import UnitOfWork
+from common import utc_now_naive
 
 
 class RestoreExerciseUseCase:
@@ -25,10 +25,10 @@ class RestoreExerciseUseCase:
             category=CategorySchema(
                 id=uuid.uuid4(),
                 title="Category 1",
-                created_at=datetime.datetime.now(),
-                updated_at=datetime.datetime.now(),
+                created_at=utc_now_naive(),
+                updated_at=utc_now_naive(),
             ),
-            created_at=datetime.datetime.now(),
-            updated_at=datetime.datetime.now(),
+            created_at=utc_now_naive(),
+            updated_at=utc_now_naive(),
             is_archived=False,
         )

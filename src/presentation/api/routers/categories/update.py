@@ -7,6 +7,7 @@ from use_cases.categories.update import UpdateCategoryUseCase
 
 from presentation.api.dependencies.auth import UserDep
 from presentation.api.dependencies.uow import UOWDep
+from presentation.api.responses.categories import UPDATE_CATEGORY_RESPONSES
 from presentation.api.schemas.categories import (
     UpdateCategoryRequest,
     UpdateCategoryResponse,
@@ -22,6 +23,7 @@ router = APIRouter()
     description="Обновляет категорию по идентификатору",
     response_description="Обновленные детали категории",
     response_model=UpdateCategoryResponse,
+    responses=UPDATE_CATEGORY_RESPONSES,
 )
 async def update_category(
     id: uuid.UUID,

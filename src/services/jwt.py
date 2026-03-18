@@ -2,6 +2,7 @@ import jwt
 import datetime
 
 from dto.auth import PayloadDTO, PayloadDataDTO
+from common import utc_now_aware
 
 
 class JWTService:
@@ -19,7 +20,7 @@ class JWTService:
         self,
         data: PayloadDataDTO,
     ) -> str:
-        now = datetime.datetime.now(datetime.UTC)
+        now = utc_now_aware()
         payload = PayloadDTO(
             sub=str(data.telegram_id),
             iat=int(now.timestamp()),

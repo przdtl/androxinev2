@@ -7,6 +7,7 @@ from use_cases.exercises import DeleteExerciseUseCase
 
 from presentation.api.dependencies.auth import UserDep
 from presentation.api.dependencies.uow import UOWDep
+from presentation.api.responses.exercises.delete import DELETE_EXERCISE_RESPONSES
 from presentation.api.schemas.exercises import DeleteExerciseResponse
 
 router = APIRouter()
@@ -18,6 +19,7 @@ router = APIRouter()
     description="Удаляет упражнение по идентификатору",
     response_description="Результат удаления",
     response_model=DeleteExerciseResponse,
+    responses=DELETE_EXERCISE_RESPONSES,
 )
 async def delete_exercise(
     id: uuid.UUID,

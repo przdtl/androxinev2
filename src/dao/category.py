@@ -75,3 +75,9 @@ class CategoryDAO:
         )
 
         return result.scalars().all()
+
+    async def exists_by_user_and_title(self, user_id: int, title: str) -> bool:
+        result = await self._session.execute(
+            select(Category).where(Category.user_id == user_id, Category.title == title)
+        )
+        return result.scalar_one_or_none() is not None

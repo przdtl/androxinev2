@@ -5,6 +5,7 @@ from use_cases.categories.create import CreateCategoryUseCase
 
 from presentation.api.dependencies.auth import UserDep
 from presentation.api.dependencies.uow import UOWDep
+from presentation.api.responses.categories import CREATE_CATEGORY_RESPONSES
 from presentation.api.schemas.categories import (
     CreateCategoryRequest,
     CreateCategoryResponse,
@@ -20,6 +21,7 @@ router = APIRouter()
     description="Создает новую категорию",
     response_description="Детали созданной категории",
     response_model=CreateCategoryResponse,
+    responses=CREATE_CATEGORY_RESPONSES,
 )
 async def create_category(
     data: CreateCategoryRequest,

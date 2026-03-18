@@ -7,6 +7,7 @@ from use_cases.sets import DeleteSetUseCase
 
 from presentation.api.dependencies.auth import UserDep
 from presentation.api.dependencies.uow import UOWDep
+from presentation.api.responses.sets.delete import DELETE_SET_RESPONSES
 from presentation.api.schemas.sets import DeleteSetResponse
 
 router = APIRouter()
@@ -18,6 +19,7 @@ router = APIRouter()
     description="Удаляет сет по идентификатору",
     response_description="Результат удаления",
     response_model=DeleteSetResponse,
+    responses=DELETE_SET_RESPONSES,
 )
 async def delete_set(
     id: uuid.UUID,

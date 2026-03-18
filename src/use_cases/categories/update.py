@@ -15,7 +15,6 @@ class UpdateCategoryUseCase:
         self,
         input_dto: UpdateCategoryInputDTO,
     ) -> UpdateCategoryOutputDTO:
-        # Проверяем, что категория принадлежит пользователю
         category = await self._uow.categories_dao.get_by_user_and_id(
             user_id=input_dto.user_id,
             category_id=input_dto.category_id,
@@ -23,7 +22,6 @@ class UpdateCategoryUseCase:
         if category is None:
             raise CategoryNotAccessibleError()
 
-        # Обновляем категорию
         updated_category = await self._uow.categories_dao.update(
             category_id=input_dto.category_id,
             title=input_dto.title,

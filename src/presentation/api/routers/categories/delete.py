@@ -7,6 +7,7 @@ from use_cases.categories import DeleteCategoryUseCase
 
 from presentation.api.dependencies.auth import UserDep
 from presentation.api.dependencies.uow import UOWDep
+from presentation.api.responses.categories import DELETE_CATEGORY_RESPONSES
 from presentation.api.schemas.categories import DeleteCategoryResponse
 
 router = APIRouter()
@@ -18,6 +19,7 @@ router = APIRouter()
     description="Удаляет категорию по идентификатору",
     response_description="Результат удаления",
     response_model=DeleteCategoryResponse,
+    responses=DELETE_CATEGORY_RESPONSES,
 )
 async def delete_category(
     id: uuid.UUID,

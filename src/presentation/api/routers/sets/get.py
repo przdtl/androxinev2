@@ -7,6 +7,7 @@ from use_cases.sets import GetSetUseCase
 
 from presentation.api.dependencies.auth import UserDep
 from presentation.api.dependencies.uow import UOWDep
+from presentation.api.responses.sets.get import GET_SET_RESPONSES
 from presentation.api.schemas.common import CategorySchema
 from presentation.api.schemas.sets.get import ExerciseSchema
 from presentation.api.schemas.sets import GetSetResponse
@@ -20,6 +21,7 @@ router = APIRouter()
     description="Возвращает подход по идентификатору",
     response_description="Детали подхода",
     response_model=GetSetResponse,
+    responses=GET_SET_RESPONSES,
 )
 async def get_set(
     id: uuid.UUID,

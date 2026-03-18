@@ -5,6 +5,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio.session import AsyncSession
 
 from models import Set
+from common import normalize_to_utc_naive
 from exceptions.sets import SetNotFoundError
 
 
@@ -28,14 +29,14 @@ class SetsDAO:
         exercise_id: uuid.UUID,
         weight: float,
         reps: int,
-        created_at: datetime.datetime | None = None,
+        created_at: datetime.datetime | datetime.date | None = None,
     ) -> Set:
         set_item = Set(
             user_id=user_id,
             exercise_id=exercise_id,
             weight=weight,
             reps=reps,
-            created_at=created_at or datetime.datetime.now(),
+            created_at=normalize_to_utc_naive(created_at),
         )
         self._session.add(set_item)
         await self._session.flush()
