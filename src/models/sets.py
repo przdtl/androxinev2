@@ -7,6 +7,7 @@ from sqlalchemy import ForeignKey, CheckConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from db.base import Base
+from common import utc_now_naive
 
 if TYPE_CHECKING:
     from models import User, Exercise
@@ -22,10 +23,10 @@ class Set(Base):
     )
     weight: Mapped[float] = mapped_column(nullable=False)
     reps: Mapped[int] = mapped_column(nullable=False)
-    created_at: Mapped[datetime.datetime] = mapped_column(default=datetime.datetime.now)
+    created_at: Mapped[datetime.datetime] = mapped_column(default=utc_now_naive)
     updated_at: Mapped[datetime.datetime | None] = mapped_column(
         default=None,
-        onupdate=datetime.datetime.now,
+        onupdate=utc_now_naive,
     )
 
     user: Mapped["User"] = relationship(back_populates="sets", lazy="selectin")

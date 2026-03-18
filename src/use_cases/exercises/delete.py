@@ -2,6 +2,7 @@ from dto.exercises import (
     DeleteExerciseInputDTO,
     DeleteExerciseOutputDTO,
 )
+from exceptions.exercises import ExerciseNotAccessibleError
 
 from uow import UnitOfWork
 
@@ -14,15 +15,13 @@ class DeleteExerciseUseCase:
         self,
         input_dto: DeleteExerciseInputDTO,
     ) -> DeleteExerciseOutputDTO:
-        # Проверяем, что упражнение принадлежит пользователю
         exercise = await self._uow.exercises_dao.get_by_user_and_id(
             user_id=input_dto.user_id,
             exercise_id=input_dto.exercise_id,
         )
         if exercise is None:
-            raise ValueError("Exercise not found or does not belong to the user")
+            raise ExerciseNotAccessibleError()
 
-        # Удаляем упражнение
         await self._uow.exercises_dao.delete(exercise_id=input_dto.exercise_id)
 
         return DeleteExerciseOutputDTO()

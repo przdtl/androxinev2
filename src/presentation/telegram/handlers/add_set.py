@@ -101,8 +101,6 @@ async def add_set_handler(message: Message, uow: UnitOfWork):
         await message.answer("❌ Не удалось определить пользователя.")
         return
 
-    print(f"Дата команды: {message.date}")
-
     use_case = CreateSetFromBotUseCase(uow)
     dto = CreateSetByExerciseShortInputDTO(
         user_id=message.from_user.id,

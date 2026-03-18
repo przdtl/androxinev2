@@ -2,6 +2,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio.session import AsyncSession
 
 from models.users import User
+from exceptions.account import UserNotFoundError
 
 
 class UsersDAO:
@@ -42,7 +43,7 @@ class UsersDAO:
     ) -> User:
         user = await self.get_by_id(telegram_id)
         if not user:
-            raise ValueError("User not found")
+            raise UserNotFoundError(context={"telegram_id": str(telegram_id)})
 
         if first_name is not None:
             user.first_name = first_name

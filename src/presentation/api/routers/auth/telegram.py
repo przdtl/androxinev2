@@ -10,6 +10,7 @@ from services.telegram_auth import TelegramAuthService
 from config import settings
 
 from presentation.api.dependencies.uow import UOWDep
+from presentation.api.responses.auth.telegram import TELEGRAM_AUTH_RESPONSES
 from presentation.api.schemas.auth import AuthResponse, TelegramAuthRequest
 
 router = APIRouter()
@@ -20,6 +21,7 @@ router = APIRouter()
     response_model=AuthResponse,
     status_code=status.HTTP_200_OK,
     summary="Authenticate via Telegram WebApp",
+    responses=TELEGRAM_AUTH_RESPONSES,
 )
 async def telegram_auth(request: TelegramAuthRequest, uow: UOWDep) -> AuthResponse:
     """

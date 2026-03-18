@@ -9,7 +9,7 @@ class CreateSetByExerciseShortInputDTO(BaseModel):
     exercise_short: str
     weight: float
     reps: int
-    created_at: datetime.datetime
+    created_at: datetime.datetime | datetime.date | None = None
 
 
 class CreateSetByExerciseShortOutputDTO(BaseModel):

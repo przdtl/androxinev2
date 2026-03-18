@@ -7,6 +7,7 @@ from use_cases.exercises import UpdateExerciseUseCase
 
 from presentation.api.dependencies.auth import UserDep
 from presentation.api.dependencies.uow import UOWDep
+from presentation.api.responses.exercises.update import UPDATE_EXERCISE_RESPONSES
 from presentation.api.schemas.common import CategorySchema
 from presentation.api.schemas.exercises import (
     UpdateExerciseRequest,
@@ -22,6 +23,7 @@ router = APIRouter()
     description="Обновляет упражнение по идентификатору",
     response_description="Обновленные детали упражнения",
     response_model=UpdateExerciseResponse,
+    responses=UPDATE_EXERCISE_RESPONSES,
 )
 async def update_excercise(
     id: uuid.UUID,

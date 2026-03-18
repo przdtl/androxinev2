@@ -4,6 +4,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio.session import AsyncSession
 
 from models import Exercise, Category
+from exceptions.exercises import ExerciseNotFoundError
 
 
 class ExerciseDAO:
@@ -67,7 +68,7 @@ class ExerciseDAO:
     ) -> Exercise:
         exercise = await self.get_by_id(exercise_id)
         if not exercise:
-            raise ValueError(f"Exercise {exercise_id} not found")
+            raise ExerciseNotFoundError(context={"exercise_id": str(exercise_id)})
 
         if title is not None:
             exercise.title = title
@@ -82,7 +83,7 @@ class ExerciseDAO:
     async def archive(self, exercise_id: uuid.UUID) -> Exercise:
         exercise = await self.get_by_id(exercise_id)
         if not exercise:
-            raise ValueError(f"Exercise {exercise_id} not found")
+            raise ExerciseNotFoundError(context={"exercise_id": str(exercise_id)})
 
         exercise.is_archived = True
         await self._session.flush()
@@ -91,7 +92,7 @@ class ExerciseDAO:
     async def restore(self, exercise_id: uuid.UUID) -> Exercise:
         exercise = await self.get_by_id(exercise_id)
         if not exercise:
-            raise ValueError(f"Exercise {exercise_id} not found")
+            raise ExerciseNotFoundError(context={"exercise_id": str(exercise_id)})
 
         exercise.is_archived = False
         await self._session.flush()
@@ -100,7 +101,7 @@ class ExerciseDAO:
     async def delete(self, exercise_id: uuid.UUID) -> None:
         exercise = await self.get_by_id(exercise_id)
         if not exercise:
-            raise ValueError(f"Exercise {exercise_id} not found")
+            raise ExerciseNotFoundError(context={"exercise_id": str(exercise_id)})
 
         await self._session.delete(exercise)
         await self._session.flush()

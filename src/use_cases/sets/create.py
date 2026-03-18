@@ -3,6 +3,7 @@ from dto.sets import (
     CreateSetOutputDTO,
 )
 from dto.sets.create import ExerciseSchema, CategorySchema
+from exceptions.exercises import ExerciseNotFoundError
 
 from uow import UnitOfWork
 
@@ -19,7 +20,7 @@ class CreateSetUseCase:
             exercise_id=input_dto.exercise_id
         )
         if not exercise:
-            raise ValueError("Exercise not found")
+            raise ExerciseNotFoundError()
 
         set_item = await self._uow.sets_dao.create(
             user_id=input_dto.user_id,

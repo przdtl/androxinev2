@@ -7,6 +7,7 @@ from use_cases.exercises import GetExerciseUseCase
 
 from presentation.api.dependencies.auth import UserDep
 from presentation.api.dependencies.uow import UOWDep
+from presentation.api.responses.exercises.get import GET_EXERCISE_RESPONSES
 from presentation.api.schemas.common import CategorySchema
 from presentation.api.schemas.exercises import (
     GetExerciseResponse,
@@ -21,6 +22,7 @@ router = APIRouter()
     description="Возвращает упражнение по идентификатору",
     response_description="Детали упражнения",
     response_model=GetExerciseResponse,
+    responses=GET_EXERCISE_RESPONSES,
 )
 async def get_excercise(
     id: uuid.UUID,

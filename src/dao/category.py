@@ -1,9 +1,10 @@
 import uuid
 
-from models import Category
-
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio.session import AsyncSession
+
+from models import Category
+from exceptions.categories import CategoryNotFoundError
 
 
 class CategoryDAO:
@@ -35,7 +36,7 @@ class CategoryDAO:
     async def update(self, category_id: uuid.UUID, title: str) -> Category:
         category = await self.get_by_id(category_id)
         if not category:
-            raise ValueError(f"Category {category_id} not found")
+            raise CategoryNotFoundError(context={"category_id": str(category_id)})
 
         category.title = title
         await self._session.flush()
@@ -44,7 +45,7 @@ class CategoryDAO:
     async def delete(self, category_id: uuid.UUID) -> None:
         category = await self.get_by_id(category_id)
         if not category:
-            raise ValueError(f"Category {category_id} not found")
+            raise CategoryNotFoundError(context={"category_id": str(category_id)})
 
         await self._session.delete(category)
         await self._session.flush()
@@ -74,3 +75,9 @@ class CategoryDAO:
         )
 
         return result.scalars().all()
+
+    async def exists_by_user_and_title(self, user_id: int, title: str) -> bool:
+        result = await self._session.execute(
+            select(Category).where(Category.user_id == user_id, Category.title == title)
+        )
+        return result.scalar_one_or_none() is not None

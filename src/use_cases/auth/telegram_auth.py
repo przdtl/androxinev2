@@ -5,13 +5,9 @@ from dto.auth import TelegramAuthInputDTO, TelegramAuthOutputDTO, PayloadDataDTO
 
 from services.jwt import JWTService
 from services.telegram_auth import TelegramAuthService
+from exceptions.account import InvalidTelegramAuthDataError
 
 from uow import UnitOfWork
-
-
-class InvalidTelegramAuthDataError(Exception):
-    def __init__(self):
-        super().__init__("Invalid Telegram authentication data")
 
 
 class TelegramAuthUseCase:

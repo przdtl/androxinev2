@@ -5,6 +5,7 @@ from use_cases.sets import CreateSetUseCase
 
 from presentation.api.dependencies.auth import UserDep
 from presentation.api.dependencies.uow import UOWDep
+from presentation.api.responses.sets.create import CREATE_SET_RESPONSES
 from presentation.api.schemas.common import CategorySchema
 from presentation.api.schemas.sets.create import ExerciseSchema
 from presentation.api.schemas.sets import CreateSetRequest, CreateSetResponse
@@ -18,6 +19,7 @@ router = APIRouter()
     description="Создает новый сет с указанными параметрами и возвращает его детали",
     response_description="Детали созданного сета",
     response_model=CreateSetResponse,
+    responses=CREATE_SET_RESPONSES,
 )
 async def create_set(
     data: CreateSetRequest,

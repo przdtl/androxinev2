@@ -7,6 +7,7 @@ from use_cases.sets import UpdateSetUseCase
 
 from presentation.api.dependencies.auth import UserDep
 from presentation.api.dependencies.uow import UOWDep
+from presentation.api.responses.sets.update import UPDATE_SET_RESPONSES
 from presentation.api.schemas.common import CategorySchema
 from presentation.api.schemas.sets.update import ExerciseSchema
 from presentation.api.schemas.sets import UpdateSetRequest, UpdateSetResponse
@@ -20,6 +21,7 @@ router = APIRouter()
     description="Обновляет подход по идентификатору",
     response_description="Обновленные детали подхода",
     response_model=UpdateSetResponse,
+    responses=UPDATE_SET_RESPONSES,
 )
 async def update_set(
     id: uuid.UUID,

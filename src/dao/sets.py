@@ -1,10 +1,12 @@
-import datetime
 import uuid
+import datetime
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio.session import AsyncSession
 
 from models import Set
+from common import normalize_to_utc_naive
+from exceptions.sets import SetNotFoundError
 
 
 class SetsDAO:
@@ -27,14 +29,14 @@ class SetsDAO:
         exercise_id: uuid.UUID,
         weight: float,
         reps: int,
-        created_at: datetime.datetime | None = None,
+        created_at: datetime.datetime | datetime.date | None = None,
     ) -> Set:
         set_item = Set(
             user_id=user_id,
             exercise_id=exercise_id,
             weight=weight,
             reps=reps,
-            created_at=created_at or datetime.datetime.now(),
+            created_at=normalize_to_utc_naive(created_at),
         )
         self._session.add(set_item)
         await self._session.flush()
@@ -48,7 +50,7 @@ class SetsDAO:
     ) -> Set:
         set_item = await self.get_by_id(set_id)
         if not set_item:
-            raise ValueError(f"Set {set_id} not found")
+            raise SetNotFoundError(context={"set_id": str(set_id)})
 
         if weight is not None:
             set_item.weight = weight
@@ -61,7 +63,7 @@ class SetsDAO:
     async def delete(self, set_id: uuid.UUID) -> None:
         set_item = await self.get_by_id(set_id)
         if not set_item:
-            raise ValueError(f"Set {set_id} not found")
+            raise SetNotFoundError(context={"set_id": str(set_id)})
 
         await self._session.delete(set_item)
         await self._session.flush()

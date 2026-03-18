@@ -2,6 +2,7 @@ from dto.categories import (
     GetCategoryInputDTO,
     GetCategoryOutputDTO,
 )
+from exceptions.categories import CategoryNotAccessibleError
 
 from uow import UnitOfWork
 
@@ -19,7 +20,7 @@ class GetCategoryUseCase:
             category_id=input_dto.category_id,
         )
         if category is None:
-            raise ValueError("Category not found or does not belong to the user")
+            raise CategoryNotAccessibleError()
 
         return GetCategoryOutputDTO(
             id=category.id,

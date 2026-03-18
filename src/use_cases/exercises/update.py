@@ -3,6 +3,7 @@ from dto.exercises import (
     UpdateExerciseOutputDTO,
 )
 from dto.exercises.update import CategorySchema
+from exceptions.exercises import ExerciseAccessDeniedError, ExerciseNotFoundError
 
 from uow import UnitOfWork
 
@@ -19,10 +20,10 @@ class UpdateExerciseUseCase:
             exercise_id=input_dto.exercise_id,
         )
         if exercise is None:
-            raise ValueError("Exercise not found")
+            raise ExerciseNotFoundError()
 
         if exercise.user_id != input_dto.user_id:
-            raise ValueError("Exercise does not belong to the user")
+            raise ExerciseAccessDeniedError()
 
         await self._uow.exercises_dao.update(
             exercise_id=input_dto.exercise_id,
