@@ -22,20 +22,23 @@ router = APIRouter()
 
 
 @router.patch(
-    path="/{id}/",
+    path="/{exercise_id}/",
     summary="Обновить упражнение в шаблоне",
     description="Обновляет упражнение в шаблоне по идентификатору",
     response_description="Обновленные детали упражнения в шаблоне",
     response_model=UpdateTemplateExerciseResponse,
 )
 async def update_template_excercise(
-    id: uuid.UUID,
+    template_id: uuid.UUID,
+    exercise_id: uuid.UUID,
     data: UpdateTemplateExerciseRequest,
     uow: UOWDep,
     user_id: UserDep,
 ) -> UpdateTemplateExerciseResponse:
     dto = UpdateTemplateExerciseInputDTO(
-        id=id,
+        user_id=user_id,
+        template_id=template_id,
+        exercise_id=exercise_id,
         default_weight=data.default_weight,
         default_reps=data.default_reps,
         order=data.order,
@@ -55,8 +58,6 @@ async def update_template_excercise(
             category=CategorySchema(
                 id=template_exercise.exercise.category.id,
                 title=template_exercise.exercise.category.title,
-                created_at=template_exercise.exercise.category.created_at,
-                updated_at=template_exercise.exercise.category.updated_at,
             ),
             created_at=template_exercise.exercise.created_at,
             updated_at=template_exercise.exercise.updated_at,

@@ -7,8 +7,8 @@ from .delete import router as delete_router
 
 
 router = APIRouter(
-    prefix="/template_exercises",
-    tags=["Шаблоны упражнений"],
+    prefix="/templates/{template_id}/exercises",
+    tags=["Упражнения в шаблонах"],
 )
 
 router.include_router(list_router)

@@ -1,3 +1,5 @@
+import uuid
+
 from fastapi import APIRouter
 
 from dto.template_exercises.create_template_exercise import (
@@ -27,11 +29,14 @@ router = APIRouter()
     response_model=CreateTemplateExerciseResponse,
 )
 async def create_template_exercise(
+    template_id: uuid.UUID,
     data: CreateTemplateExerciseRequest,
     uow: UOWDep,
     user_id: UserDep,
 ) -> CreateTemplateExerciseResponse:
     dto = CreateTemplateExerciseInputDTO(
+        user_id=user_id,
+        template_id=template_id,
         exercise_id=data.exercise_id,
         default_weight=data.default_weight,
         default_reps=data.default_reps,
@@ -52,8 +57,6 @@ async def create_template_exercise(
             category=CategorySchema(
                 id=template_exercise.exercise.category.id,
                 title=template_exercise.exercise.category.title,
-                created_at=template_exercise.exercise.category.created_at,
-                updated_at=template_exercise.exercise.category.updated_at,
             ),
             created_at=template_exercise.exercise.created_at,
             updated_at=template_exercise.exercise.updated_at,

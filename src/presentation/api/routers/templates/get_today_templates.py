@@ -36,7 +36,7 @@ async def get_today_templates(
     user_id: UserDep,
     params: Params = Depends(),
 ) -> Page[GetTodayTemplatesResponse]:
-    dto = GetTodayTemplatesInputDTO()
+    dto = GetTodayTemplatesInputDTO(user_id=user_id)
     use_case = GetTodayTemplatesUseCase(uow=uow)
     templates = await use_case.execute(input_dto=dto)
 
@@ -60,8 +60,6 @@ async def get_today_templates(
                         category=CategorySchema(
                             id=exc.exercise.category.id,
                             title=exc.exercise.category.title,
-                            created_at=exc.exercise.category.created_at,
-                            updated_at=exc.exercise.category.updated_at,
                         ),
                         created_at=exc.exercise.created_at,
                         updated_at=exc.exercise.updated_at,

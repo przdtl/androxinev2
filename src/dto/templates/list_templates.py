@@ -16,6 +16,7 @@ class DayOfWeek(enum.IntEnum):
 
 
 class ListTemplatesInputDTO(BaseModel):
+    user_id: int
     page: int
     size: int
 

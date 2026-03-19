@@ -1,8 +1,8 @@
 from dto.template_exercises import (
-    UpdateTemplateExerciseInputDTO,
-    UpdateTemplateExerciseOutputDTO,
+    GetTemplateExerciseInputDTO,
+    GetTemplateExerciseOutputDTO,
 )
-from dto.template_exercises.update_template_exercise import (
+from dto.template_exercises.get_template_exercise import (
     CategorySchema,
     ExerciseSchema,
 )
@@ -13,14 +13,14 @@ from uow import UnitOfWork
 from use_cases.templates._mapping import safe_datetime
 
 
-class UpdateTemplateExerciseUseCase:
+class GetTemplateExerciseUseCase:
     def __init__(self, uow: UnitOfWork):
         self._uow = uow
 
     async def execute(
         self,
-        input_dto: UpdateTemplateExerciseInputDTO,
-    ) -> UpdateTemplateExerciseOutputDTO:
+        input_dto: GetTemplateExerciseInputDTO,
+    ) -> GetTemplateExerciseOutputDTO:
         template = await self._uow.workout_templates_dao.get_by_user_and_id(
             user_id=input_dto.user_id,
             template_id=input_dto.template_id,
@@ -33,14 +33,11 @@ class UpdateTemplateExerciseUseCase:
                 }
             )
 
-        updated = await self._uow.workout_templates_dao.update_exercise(
+        template_exercise = await self._uow.workout_templates_dao.get_exercise(
             template_id=input_dto.template_id,
             exercise_id=input_dto.exercise_id,
-            default_weight=input_dto.default_weight,
-            default_reps=input_dto.default_reps,
-            order=input_dto.order,
         )
-        if updated is None:
+        if template_exercise is None:
             raise ExerciseNotFoundError(
                 context={"exercise_id": str(input_dto.exercise_id)}
             )
@@ -53,11 +50,11 @@ class UpdateTemplateExerciseUseCase:
                 context={"exercise_id": str(input_dto.exercise_id)}
             )
 
-        return UpdateTemplateExerciseOutputDTO(
-            id=updated.id,
-            default_weight=updated.weight,
-            default_reps=updated.reps,
-            order=updated.order,
+        return GetTemplateExerciseOutputDTO(
+            id=template_exercise.id,
+            default_weight=template_exercise.weight,
+            default_reps=template_exercise.reps,
+            order=template_exercise.order,
             exercise=ExerciseSchema(
                 id=exercise.id,
                 title=exercise.title,

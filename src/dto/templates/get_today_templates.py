@@ -16,7 +16,7 @@ class DayOfWeek(enum.IntEnum):
 
 
 class GetTodayTemplatesInputDTO(BaseModel):
-    pass
+    user_id: int
 
 
 class CategorySchema(BaseModel):

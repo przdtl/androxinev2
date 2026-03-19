@@ -1,6 +1,6 @@
 import uuid
 
-from fastapi import APIRouter
+from fastapi import APIRouter, status
 
 from dto.template_exercises.delete_template_exercise import (
     DeleteTemplateExerciseInputDTO,
@@ -11,27 +11,27 @@ from use_cases.template_exercises.delete import (
 
 from presentation.api.dependencies.auth import UserDep
 from presentation.api.dependencies.uow import UOWDep
-from presentation.api.schemas.template_exercises import (
-    DeleteTemplateExerciseResponse,
-)
 
 router = APIRouter()
 
 
 @router.delete(
-    path="/{id}/",
+    path="/{exercise_id}/",
     summary="Удалить упражнение из шаблона",
     description="Удаляет упражнение из шаблона по идентификатору",
     response_description="Результат удаления",
-    response_model=DeleteTemplateExerciseResponse,
+    status_code=status.HTTP_204_NO_CONTENT,
 )
 async def delete_template_excercise(
-    id: uuid.UUID,
+    template_id: uuid.UUID,
+    exercise_id: uuid.UUID,
     uow: UOWDep,
     user_id: UserDep,
-) -> DeleteTemplateExerciseResponse:
-    dto = DeleteTemplateExerciseInputDTO(id=id)
+) -> None:
+    dto = DeleteTemplateExerciseInputDTO(
+        user_id=user_id,
+        template_id=template_id,
+        exercise_id=exercise_id,
+    )
     use_case = DeleteTemplateExerciseUseCase(uow=uow)
     await use_case.execute(input_dto=dto)
-
-    return DeleteTemplateExerciseResponse()

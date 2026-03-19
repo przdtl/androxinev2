@@ -1,35 +1,9 @@
-import datetime
-import enum
 import uuid
+import datetime
 
 from pydantic import BaseModel
 
-
-class DayOfWeek(enum.IntEnum):
-    MONDAY = 0
-    TUESDAY = 1
-    WEDNESDAY = 2
-    THURSDAY = 3
-    FRIDAY = 4
-    SATURDAY = 5
-    SUNDAY = 6
-
-
-class UpdateTemplateInputDTO(BaseModel):
-    user_id: int
-    id: uuid.UUID
-    title: str | None = None
-    day_of_week: DayOfWeek | None = None
-
-
-class CategorySchema(BaseModel):
-    id: uuid.UUID
-    title: str
-    created_at: datetime.datetime
-    updated_at: datetime.datetime
-
-    class Config:
-        from_attributes = True
+from presentation.api.schemas.common import CategorySchema, DayOfWeek
 
 
 class ExerciseSchema(BaseModel):
@@ -56,7 +30,7 @@ class TemplateExerciseSchema(BaseModel):
         from_attributes = True
 
 
-class UpdateTemplateOutputDTO(BaseModel):
+class TemplateResponse(BaseModel):
     id: uuid.UUID
     title: str
     day_of_week: DayOfWeek | None

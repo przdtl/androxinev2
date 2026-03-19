@@ -1,3 +1,5 @@
+import uuid
+
 from fastapi import APIRouter, Depends
 from fastapi_pagination import Page, paginate, Params
 
@@ -27,11 +29,14 @@ router = APIRouter()
     response_model=Page[ListTemplateExercisesResponse],
 )
 async def list_template_excercises(
+    template_id: uuid.UUID,
     uow: UOWDep,
     user_id: UserDep,
     params: Params = Depends(),
 ) -> Page[ListTemplateExercisesResponse]:
     dto = ListTemplateExercisesInputDTO(
+        user_id=user_id,
+        template_id=template_id,
         page=params.page,
         size=params.size,
     )
@@ -51,8 +56,8 @@ async def list_template_excercises(
                 category=CategorySchema(
                     id=template_exercise.exercise.category.id,
                     title=template_exercise.exercise.category.title,
-                    created_at=template_exercise.exercise.category.created_at,
-                    updated_at=template_exercise.exercise.category.updated_at,
+                    # created_at=template_exercise.exercise.category.created_at,
+                    # updated_at=template_exercise.exercise.category.updated_at,
                 ),
                 created_at=template_exercise.exercise.created_at,
                 updated_at=template_exercise.exercise.updated_at,

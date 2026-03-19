@@ -1,25 +1,13 @@
 import datetime
-import enum
 import uuid
 
 from pydantic import BaseModel
 
 
-class DayOfWeek(enum.IntEnum):
-    MONDAY = 0
-    TUESDAY = 1
-    WEDNESDAY = 2
-    THURSDAY = 3
-    FRIDAY = 4
-    SATURDAY = 5
-    SUNDAY = 6
-
-
-class UpdateTemplateInputDTO(BaseModel):
+class GetTemplateExerciseInputDTO(BaseModel):
     user_id: int
-    id: uuid.UUID
-    title: str | None = None
-    day_of_week: DayOfWeek | None = None
+    template_id: uuid.UUID
+    exercise_id: uuid.UUID
 
 
 class CategorySchema(BaseModel):
@@ -45,24 +33,12 @@ class ExerciseSchema(BaseModel):
         from_attributes = True
 
 
-class TemplateExerciseSchema(BaseModel):
+class GetTemplateExerciseOutputDTO(BaseModel):
     id: uuid.UUID
     default_weight: float | None = None
     default_reps: int | None = None
     order: int | None = None
     exercise: ExerciseSchema
-
-    class Config:
-        from_attributes = True
-
-
-class UpdateTemplateOutputDTO(BaseModel):
-    id: uuid.UUID
-    title: str
-    day_of_week: DayOfWeek | None
-    created_at: datetime.datetime
-    updated_at: datetime.datetime
-    exercises: list[TemplateExerciseSchema] = []
 
     class Config:
         from_attributes = True

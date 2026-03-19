@@ -15,11 +15,9 @@ class DayOfWeek(enum.IntEnum):
     SUNDAY = 6
 
 
-class UpdateTemplateInputDTO(BaseModel):
+class GetTemplateInputDTO(BaseModel):
     user_id: int
     id: uuid.UUID
-    title: str | None = None
-    day_of_week: DayOfWeek | None = None
 
 
 class CategorySchema(BaseModel):
@@ -56,13 +54,13 @@ class TemplateExerciseSchema(BaseModel):
         from_attributes = True
 
 
-class UpdateTemplateOutputDTO(BaseModel):
+class GetTemplateOutputDTO(BaseModel):
     id: uuid.UUID
     title: str
     day_of_week: DayOfWeek | None
     created_at: datetime.datetime
     updated_at: datetime.datetime
-    exercises: list[TemplateExerciseSchema] = []
+    exercises: list[TemplateExerciseSchema]
 
     class Config:
         from_attributes = True

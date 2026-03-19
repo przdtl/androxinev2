@@ -9,6 +9,7 @@ from exceptions.exercises import (
 )
 from exceptions.common import AppException
 from exceptions.sets import SetNotAccessibleError, SetNotFoundError
+from exceptions.templates import TemplateAccessDeniedError
 
 from presentation.api.app import app
 from presentation.api.schemas.common import APIError, ErrorDetail
@@ -26,6 +27,7 @@ def _status_code_by_exception(exc: AppException) -> int:
         SetNotFoundError: status.HTTP_404_NOT_FOUND,
         SetNotAccessibleError: status.HTTP_404_NOT_FOUND,
         ExerciseAccessDeniedError: status.HTTP_403_FORBIDDEN,
+        TemplateAccessDeniedError: status.HTTP_403_FORBIDDEN,
     }
     return status_map.get(type(exc), status.HTTP_400_BAD_REQUEST)
 

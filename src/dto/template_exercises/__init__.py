@@ -6,6 +6,10 @@ from .delete_template_exercise import (
     DeleteTemplateExerciseInputDTO,
     DeleteTemplateExerciseOutputDTO,
 )
+from .get_template_exercise import (
+    GetTemplateExerciseInputDTO,
+    GetTemplateExerciseOutputDTO,
+)
 from .list_template_exercises import (
     ListTemplateExercisesInputDTO,
     ListTemplateExercisesOutputDTO,
@@ -21,6 +25,8 @@ __all__ = [
     "CreateTemplateExerciseOutputDTO",
     "DeleteTemplateExerciseInputDTO",
     "DeleteTemplateExerciseOutputDTO",
+    "GetTemplateExerciseInputDTO",
+    "GetTemplateExerciseOutputDTO",
     "ListTemplateExercisesInputDTO",
     "ListTemplateExercisesOutputDTO",
     "UpdateTemplateExerciseInputDTO",

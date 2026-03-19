@@ -4,7 +4,9 @@ from pydantic import BaseModel
 
 
 class DeleteTemplateExerciseInputDTO(BaseModel):
-    id: uuid.UUID
+    user_id: int
+    template_id: uuid.UUID
+    exercise_id: uuid.UUID
 
 
 class DeleteTemplateExerciseOutputDTO(BaseModel):

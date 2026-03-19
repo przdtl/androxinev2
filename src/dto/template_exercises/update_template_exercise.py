@@ -5,7 +5,9 @@ from pydantic import BaseModel
 
 
 class UpdateTemplateExerciseInputDTO(BaseModel):
-    id: uuid.UUID
+    user_id: int
+    template_id: uuid.UUID
+    exercise_id: uuid.UUID
     default_weight: float | None = None
     default_reps: int | None = None
     order: int | None = None

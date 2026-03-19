@@ -23,6 +23,7 @@ class TemplateExerciseCreateInput(BaseModel):
 
 
 class CreateTemplateInputDTO(BaseModel):
+    user_id: int
     title: str
     day_of_week: DayOfWeek | None = None
     exercises: list[TemplateExerciseCreateInput] = []

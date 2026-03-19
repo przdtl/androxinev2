@@ -40,6 +40,7 @@ async def update_template(
     user_id: UserDep,
 ) -> UpdateTemplateResponse:
     dto = UpdateTemplateInputDTO(
+        user_id=user_id,
         id=id,
         title=data.title,
         day_of_week=DayOfWeekDTO(data.day_of_week),
@@ -60,8 +61,6 @@ async def update_template(
                 category=CategorySchema(
                     id=exc.exercise.category.id,
                     title=exc.exercise.category.title,
-                    created_at=exc.exercise.category.created_at,
-                    updated_at=exc.exercise.category.updated_at,
                 ),
                 created_at=exc.exercise.created_at,
                 updated_at=exc.exercise.updated_at,

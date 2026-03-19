@@ -1,11 +1,12 @@
+import uuid
+
 from fastapi import APIRouter
 
-from dto.templates.create_template import (
-    CreateTemplateInputDTO,
-    TemplateExerciseCreateInput,
+from dto.templates import (
+    GetTemplateInputDTO,
+    GetTemplateOutputDTO,
 )
-from dto.templates.create_template import DayOfWeek as DayOfWeekDTO
-from use_cases.templates.create import CreateTemplateUseCase
+from use_cases.templates.get import GetTemplateUseCase
 
 from presentation.api.dependencies.auth import UserDep
 from presentation.api.dependencies.uow import UOWDep
@@ -13,45 +14,29 @@ from presentation.api.schemas.common import (
     CategorySchema,
     DayOfWeek as DayOfWeekSchema,
 )
-from presentation.api.schemas.templates import (
-    CreateTemplateRequest,
-    CreateTemplateResponse,
-)
-from presentation.api.schemas.templates.create import (
+from presentation.api.schemas.templates.get import (
     TemplateExerciseSchema,
     ExerciseSchema,
+    TemplateResponse,
 )
 
 router = APIRouter()
 
 
-@router.post(
-    path="/",
-    summary="Создать шаблон тренировки",
-    description="Создает новый шаблон тренировки",
-    response_description="Детали созданного шаблона",
-    response_model=CreateTemplateResponse,
+@router.get(
+    path="/{id}/",
+    summary="Получить шаблон тренировки",
+    description="Возвращает детали шаблона тренировки по идентификатору",
+    response_description="Детали шаблона тренировки",
+    response_model=TemplateResponse,
 )
-async def create_template(
-    data: CreateTemplateRequest,
+async def get_template(
+    id: uuid.UUID,
     uow: UOWDep,
     user_id: UserDep,
-) -> CreateTemplateResponse:
-    dto = CreateTemplateInputDTO(
-        user_id=user_id,
-        title=data.title,
-        day_of_week=DayOfWeekDTO(data.day_of_week),
-        exercises=[
-            TemplateExerciseCreateInput(
-                exercise_id=item.exercise_id,
-                default_weight=item.default_weight,
-                default_reps=item.default_reps,
-                order=item.order,
-            )
-            for item in data.exercises
-        ],
-    )
-    use_case = CreateTemplateUseCase(uow=uow)
+) -> TemplateResponse:
+    dto = GetTemplateInputDTO(user_id=user_id, id=id)
+    use_case = GetTemplateUseCase(uow=uow)
     template = await use_case.execute(input_dto=dto)
 
     exercises = [
@@ -76,7 +61,7 @@ async def create_template(
         for exc in template.exercises
     ]
 
-    return CreateTemplateResponse(
+    return TemplateResponse(
         id=template.id,
         title=template.title,
         day_of_week=DayOfWeekSchema(template.day_of_week),

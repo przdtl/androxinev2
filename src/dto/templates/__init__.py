@@ -6,6 +6,10 @@ from .delete_template import (
     DeleteTemplateInputDTO,
     DeleteTemplateOutputDTO,
 )
+from .get_template import (
+    GetTemplateInputDTO,
+    GetTemplateOutputDTO,
+)
 from .get_today_templates import (
     GetTodayTemplatesInputDTO,
     GetTodayTemplatesOutputDTO,
@@ -25,6 +29,8 @@ __all__ = [
     "CreateTemplateOutputDTO",
     "DeleteTemplateInputDTO",
     "DeleteTemplateOutputDTO",
+    "GetTemplateInputDTO",
+    "GetTemplateOutputDTO",
     "GetTodayTemplatesInputDTO",
     "GetTodayTemplatesOutputDTO",
     "ListTemplatesInputDTO",

@@ -34,6 +34,7 @@ async def list_templates(
     params: Params = Depends(),
 ) -> Page[ListTemplatesResponse]:
     dto = ListTemplatesInputDTO(
+        user_id=user_id,
         page=params.page,
         size=params.size,
     )
@@ -60,8 +61,6 @@ async def list_templates(
                         category=CategorySchema(
                             id=exc.exercise.category.id,
                             title=exc.exercise.category.title,
-                            created_at=exc.exercise.category.created_at,
-                            updated_at=exc.exercise.category.updated_at,
                         ),
                         created_at=exc.exercise.created_at,
                         updated_at=exc.exercise.updated_at,

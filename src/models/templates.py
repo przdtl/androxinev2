@@ -1,10 +1,15 @@
 import enum
 import uuid
 
+from typing import TYPE_CHECKING
+
 from sqlalchemy import ForeignKey, UniqueConstraint, CheckConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from db.base import Base
+
+if TYPE_CHECKING:
+    from models import Exercise
 
 
 class DayOfWeek(enum.IntEnum):
@@ -52,6 +57,8 @@ class TemplateExercise(Base):
     weight: Mapped[float | None]
     reps: Mapped[int | None]
     order: Mapped[int] = mapped_column(default=0)
+
+    exercise: Mapped["Exercise"] = relationship(lazy="selectin")
 
     __table_args__ = (
         UniqueConstraint(

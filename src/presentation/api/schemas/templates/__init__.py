@@ -3,6 +3,7 @@ from .delete import DeleteTemplateRequest, DeleteTemplateResponse
 from .get_today_templates import (
     GetTodayTemplatesResponse,
 )
+from .get import TemplateResponse, TemplateExerciseSchema
 from .list import ListTemplatesResponse
 from .update import UpdateTemplateRequest, UpdateTemplateResponse
 

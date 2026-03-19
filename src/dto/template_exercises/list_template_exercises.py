@@ -5,6 +5,8 @@ from pydantic import BaseModel
 
 
 class ListTemplateExercisesInputDTO(BaseModel):
+    user_id: int
+    template_id: uuid.UUID
     page: int
     size: int
 
