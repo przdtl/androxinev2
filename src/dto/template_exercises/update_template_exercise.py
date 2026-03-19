@@ -10,7 +10,6 @@ class UpdateTemplateExerciseInputDTO(BaseModel):
     exercise_id: uuid.UUID
     default_weight: float | None = None
     default_reps: int | None = None
-    order: int | None = None
 
 
 class CategorySchema(BaseModel):
@@ -40,7 +39,6 @@ class UpdateTemplateExerciseOutputDTO(BaseModel):
     id: uuid.UUID
     default_weight: float | None = None
     default_reps: int | None = None
-    order: int | None = None
     exercise: ExerciseSchema
 
     class Config:

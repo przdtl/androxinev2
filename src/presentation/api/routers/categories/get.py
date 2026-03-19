@@ -17,7 +17,7 @@ router = APIRouter()
 
 
 @router.get(
-    path="/{id}/",
+    path="/{category_id}/",
     summary="Получить категорию",
     description="Возвращает категорию по идентификатору",
     response_description="Детали категории",
@@ -25,13 +25,13 @@ router = APIRouter()
     responses=GET_CATEGORY_RESPONSES,
 )
 async def get_category(
-    id: uuid.UUID,
+    category_id: uuid.UUID,
     uow: UOWDep,
     user_id: UserDep,
 ) -> GetCategoryResponse:
     dto = GetCategoryInputDTO(
         user_id=user_id,
-        category_id=id,
+        category_id=category_id,
     )
     use_case = GetCategoryUseCase(uow=uow)
     category = await use_case.execute(input_dto=dto)

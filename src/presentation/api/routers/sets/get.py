@@ -16,7 +16,7 @@ router = APIRouter()
 
 
 @router.get(
-    path="/{id}/",
+    path="/{set_id}/",
     summary="Получить подход",
     description="Возвращает подход по идентификатору",
     response_description="Детали подхода",
@@ -24,13 +24,13 @@ router = APIRouter()
     responses=GET_SET_RESPONSES,
 )
 async def get_set(
-    id: uuid.UUID,
+    set_id: uuid.UUID,
     uow: UOWDep,
     user_id: UserDep,
 ) -> GetSetResponse:
     dto = GetSetInputDTO(
         user_id=user_id,
-        set_id=id,
+        set_id=set_id,
     )
     use_case = GetSetUseCase(uow=uow)
     set_item = await use_case.execute(input_dto=dto)

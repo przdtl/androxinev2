@@ -16,7 +16,7 @@ router = APIRouter()
 
 
 @router.post(
-    path="/{id}/restore/",
+    path="/{exercise_id}/restore/",
     deprecated=True,
     summary="Восстановить упражнение",
     description="Восстанавливает упражнение по идентификатору",
@@ -24,11 +24,11 @@ router = APIRouter()
     response_model=RestoreExerciseResponse,
 )
 async def restore_excercise(
-    id: uuid.UUID,
+    exercise_id: uuid.UUID,
     uow: UOWDep,
     user_id: UserDep,
 ) -> RestoreExerciseResponse:
-    dto = RestoreExerciseInputDTO(id=id)
+    dto = RestoreExerciseInputDTO(id=exercise_id)
     use_case = RestoreExerciseUseCase(uow=uow)
     exercise = await use_case.execute(input_dto=dto)
 

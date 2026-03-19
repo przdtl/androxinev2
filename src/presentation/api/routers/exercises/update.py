@@ -18,7 +18,7 @@ router = APIRouter()
 
 
 @router.patch(
-    path="/{id}/",
+    path="/{exercise_id}/",
     summary="Обновить упражнение",
     description="Обновляет упражнение по идентификатору",
     response_description="Обновленные детали упражнения",
@@ -26,13 +26,13 @@ router = APIRouter()
     responses=UPDATE_EXERCISE_RESPONSES,
 )
 async def update_excercise(
-    id: uuid.UUID,
+    exercise_id: uuid.UUID,
     data: UpdateExerciseRequest,
     uow: UOWDep,
     user_id: UserDep,
 ) -> UpdateExerciseResponse:
     dto = UpdateExerciseInputDTO(
-        exercise_id=id,
+        exercise_id=exercise_id,
         user_id=user_id,
         title=data.title,
         short=data.short,

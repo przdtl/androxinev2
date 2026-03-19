@@ -18,7 +18,7 @@ router = APIRouter()
 
 
 @router.patch(
-    path="/{id}/",
+    path="/{category_id}/",
     summary="Обновить категорию",
     description="Обновляет категорию по идентификатору",
     response_description="Обновленные детали категории",
@@ -26,14 +26,14 @@ router = APIRouter()
     responses=UPDATE_CATEGORY_RESPONSES,
 )
 async def update_category(
-    id: uuid.UUID,
+    category_id: uuid.UUID,
     data: UpdateCategoryRequest,
     uow: UOWDep,
     user_id: UserDep,
 ) -> UpdateCategoryResponse:
     dto = UpdateCategoryInputDTO(
         user_id=user_id,
-        category_id=id,
+        category_id=category_id,
         title=data.title,
     )
     use_case = UpdateCategoryUseCase(uow=uow)

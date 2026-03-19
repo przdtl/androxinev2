@@ -38,7 +38,6 @@ class UpdateTemplateExerciseUseCase:
             exercise_id=input_dto.exercise_id,
             default_weight=input_dto.default_weight,
             default_reps=input_dto.default_reps,
-            order=input_dto.order,
         )
         if updated is None:
             raise ExerciseNotFoundError(
@@ -57,7 +56,6 @@ class UpdateTemplateExerciseUseCase:
             id=updated.id,
             default_weight=updated.weight,
             default_reps=updated.reps,
-            order=updated.order,
             exercise=ExerciseSchema(
                 id=exercise.id,
                 title=exercise.title,

@@ -14,7 +14,7 @@ router = APIRouter()
 
 
 @router.delete(
-    path="/{id}/",
+    path="/{exercise_id}/",
     summary="Удалить упражнение",
     description="Удаляет упражнение по идентификатору",
     response_description="Результат удаления",
@@ -22,13 +22,13 @@ router = APIRouter()
     responses=DELETE_EXERCISE_RESPONSES,
 )
 async def delete_exercise(
-    id: uuid.UUID,
+    exercise_id: uuid.UUID,
     uow: UOWDep,
     user_id: UserDep,
 ) -> DeleteExerciseResponse:
     dto = DeleteExerciseInputDTO(
         user_id=user_id,
-        exercise_id=id,
+        exercise_id=exercise_id,
     )
     use_case = DeleteExerciseUseCase(uow=uow)
     await use_case.execute(input_dto=dto)

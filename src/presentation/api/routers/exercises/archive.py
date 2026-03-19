@@ -16,7 +16,7 @@ router = APIRouter()
 
 
 @router.post(
-    path="/{id}/archive/",
+    path="/{exercise_id}/archive/",
     deprecated=True,
     summary="Архивировать упражнение",
     description="Архивирует упражнение по идентификатору",
@@ -24,11 +24,11 @@ router = APIRouter()
     response_model=ArchiveExerciseResponse,
 )
 async def archive_excercise(
-    id: uuid.UUID,
+    exercise_id: uuid.UUID,
     uow: UOWDep,
     user_id: UserDep,
 ) -> ArchiveExerciseResponse:
-    dto = ArchiveExerciseInputDTO(id=id)
+    dto = ArchiveExerciseInputDTO(id=exercise_id)
     use_case = ArchiveExerciseUseCase(uow=uow)
     exercise = await use_case.execute(input_dto=dto)
 

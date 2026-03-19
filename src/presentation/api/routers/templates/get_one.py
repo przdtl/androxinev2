@@ -24,18 +24,18 @@ router = APIRouter()
 
 
 @router.get(
-    path="/{id}/",
+    path="/{template_id}/",
     summary="Получить шаблон тренировки",
     description="Возвращает детали шаблона тренировки по идентификатору",
     response_description="Детали шаблона тренировки",
     response_model=TemplateResponse,
 )
 async def get_template(
-    id: uuid.UUID,
+    template_id: uuid.UUID,
     uow: UOWDep,
     user_id: UserDep,
 ) -> TemplateResponse:
-    dto = GetTemplateInputDTO(user_id=user_id, id=id)
+    dto = GetTemplateInputDTO(user_id=user_id, id=template_id)
     use_case = GetTemplateUseCase(uow=uow)
     template = await use_case.execute(input_dto=dto)
 

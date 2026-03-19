@@ -16,7 +16,7 @@ router = APIRouter()
 
 
 @router.patch(
-    path="/{id}/",
+    path="/{set_id}/",
     summary="Обновить подход",
     description="Обновляет подход по идентификатору",
     response_description="Обновленные детали подхода",
@@ -24,14 +24,14 @@ router = APIRouter()
     responses=UPDATE_SET_RESPONSES,
 )
 async def update_set(
-    id: uuid.UUID,
+    set_id: uuid.UUID,
     data: UpdateSetRequest,
     uow: UOWDep,
     user_id: UserDep,
 ) -> UpdateSetResponse:
     dto = UpdateSetInputDTO(
         user_id=user_id,
-        set_id=id,
+        set_id=set_id,
         weight=data.weight,
         reps=data.reps,
     )

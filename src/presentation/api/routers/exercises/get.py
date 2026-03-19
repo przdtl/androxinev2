@@ -17,7 +17,7 @@ router = APIRouter()
 
 
 @router.get(
-    path="/{id}/",
+    path="/{exercise_id}/",
     summary="Получить упражнение",
     description="Возвращает упражнение по идентификатору",
     response_description="Детали упражнения",
@@ -25,12 +25,12 @@ router = APIRouter()
     responses=GET_EXERCISE_RESPONSES,
 )
 async def get_excercise(
-    id: uuid.UUID,
+    exercise_id: uuid.UUID,
     uow: UOWDep,
     user_id: UserDep,
 ) -> GetExerciseResponse:
     dto = GetExerciseInputDTO(
-        exercise_id=id,
+        exercise_id=exercise_id,
         user_id=user_id,
     )
     use_case = GetExerciseUseCase(uow=uow)

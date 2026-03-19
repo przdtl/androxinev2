@@ -14,7 +14,7 @@ router = APIRouter()
 
 
 @router.delete(
-    path="/{id}/",
+    path="/{set_id}/",
     summary="Удалить сет",
     description="Удаляет сет по идентификатору",
     response_description="Результат удаления",
@@ -22,12 +22,12 @@ router = APIRouter()
     responses=DELETE_SET_RESPONSES,
 )
 async def delete_set(
-    id: uuid.UUID,
+    set_id: uuid.UUID,
     uow: UOWDep,
     user_id: UserDep,
 ) -> DeleteSetResponse:
     dto = DeleteSetInputDTO(
-        set_id=id,
+        set_id=set_id,
         user_id=user_id,
     )
     use_case = DeleteSetUseCase(uow=uow)

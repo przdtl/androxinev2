@@ -12,17 +12,17 @@ router = APIRouter()
 
 
 @router.delete(
-    path="/{id}/",
+    path="/{template_id}/",
     summary="Удалить шаблон тренировки",
     description="Удаляет шаблон тренировки по идентификатору",
     response_description="Результат удаления",
     status_code=status.HTTP_204_NO_CONTENT,
 )
 async def delete_template(
-    id: uuid.UUID,
+    template_id: uuid.UUID,
     uow: UOWDep,
     user_id: UserDep,
 ) -> None:
-    dto = DeleteTemplateInputDTO(user_id=user_id, id=id)
+    dto = DeleteTemplateInputDTO(user_id=user_id, id=template_id)
     use_case = DeleteTemplateUseCase(uow=uow)
     await use_case.execute(input_dto=dto)

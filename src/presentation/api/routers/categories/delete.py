@@ -14,7 +14,7 @@ router = APIRouter()
 
 
 @router.delete(
-    path="/{id}/",
+    path="/{category_id}/",
     summary="Удалить категорию",
     description="Удаляет категорию по идентификатору",
     response_description="Результат удаления",
@@ -22,13 +22,13 @@ router = APIRouter()
     responses=DELETE_CATEGORY_RESPONSES,
 )
 async def delete_category(
-    id: uuid.UUID,
+    category_id: uuid.UUID,
     uow: UOWDep,
     user_id: UserDep,
 ) -> DeleteCategoryResponse:
     dto = DeleteCategoryInputDTO(
         user_id=user_id,
-        category_id=id,
+        category_id=category_id,
     )
     use_case = DeleteCategoryUseCase(uow=uow)
     await use_case.execute(input_dto=dto)

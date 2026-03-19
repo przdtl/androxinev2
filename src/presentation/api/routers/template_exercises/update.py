@@ -41,7 +41,6 @@ async def update_template_excercise(
         exercise_id=exercise_id,
         default_weight=data.default_weight,
         default_reps=data.default_reps,
-        order=data.order,
     )
     use_case = UpdateTemplateExerciseUseCase(uow=uow)
     template_exercise = await use_case.execute(input_dto=dto)
@@ -50,7 +49,6 @@ async def update_template_excercise(
         id=template_exercise.id,
         default_weight=template_exercise.default_weight,
         default_reps=template_exercise.default_reps,
-        order=template_exercise.order,
         exercise=ExerciseSchema(
             id=template_exercise.exercise.id,
             title=template_exercise.exercise.title,

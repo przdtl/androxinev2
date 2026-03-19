@@ -22,14 +22,12 @@ class ExerciseSchema(BaseModel):
 class UpdateTemplateExerciseRequest(BaseModel):
     default_weight: float | None = Field(default=None, gt=0)
     default_reps: int | None = Field(default=None, gt=0)
-    order: int | None = None
 
 
 class UpdateTemplateExerciseResponse(BaseModel):
     id: uuid.UUID
     default_weight: float | None = None
     default_reps: int | None = None
-    order: int | None = None
     exercise: ExerciseSchema
 
     class Config:

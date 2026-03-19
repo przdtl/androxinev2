@@ -27,21 +27,21 @@ router = APIRouter()
 
 
 @router.patch(
-    path="/{id}/",
+    path="/{template_id}/",
     summary="Обновить шаблон тренировки",
     description="Обновляет шаблон тренировки по идентификатору",
     response_description="Обновленные детали шаблона",
     response_model=UpdateTemplateResponse,
 )
 async def update_template(
-    id: uuid.UUID,
+    template_id: uuid.UUID,
     data: UpdateTemplateRequest,
     uow: UOWDep,
     user_id: UserDep,
 ) -> UpdateTemplateResponse:
     dto = UpdateTemplateInputDTO(
         user_id=user_id,
-        id=id,
+        id=template_id,
         title=data.title,
         day_of_week=DayOfWeekDTO(data.day_of_week),
     )

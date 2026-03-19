@@ -167,7 +167,6 @@ class WorkoutTemplatesDAO:
         exercise_id: uuid.UUID,
         default_weight: float | None = None,
         default_reps: int | None = None,
-        order: int | None = None,
     ) -> TemplateExercise | None:
         template_exercise = await self.get_exercise(
             template_id=template_id,
@@ -180,8 +179,6 @@ class WorkoutTemplatesDAO:
             template_exercise.weight = default_weight
         if default_reps is not None:
             template_exercise.reps = default_reps
-        if order is not None:
-            template_exercise.order = order
 
         await self._session.flush()
         return template_exercise
